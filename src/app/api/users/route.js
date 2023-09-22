@@ -6,5 +6,7 @@ import { NextResponse } from "next/server";
  * Only used for debugging purposes -- remove later
  */
 export async function GET(request) {
-
+    return NextResponse.json({
+        
+    })
 }
