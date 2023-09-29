@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-
+import { getUser } from "@/utils/user";
 export async function GET(request, {params}) {
-    return NextResponse.json({
-        "uuid": params.uuid
-    });
+    const uuid = params.uuid;
+    return NextResponse.json(getUser(uuid));
 }
