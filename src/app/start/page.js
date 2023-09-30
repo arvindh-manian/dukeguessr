@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Box, Container, Stack, Icon, Space, Center, Image, Flex, Badge, Text, Heading } from "@chakra-ui/react";
+import { Spacer, Button, Box, Container, VStack, Icon, Space, Center, Image, Flex, Badge, Text, Heading } from "@chakra-ui/react";
 import Link from 'next/link';
 import Footer from 'src/app/components/Footer';
 import styles from './page.module.css';
@@ -19,21 +19,24 @@ export default function Start() {
         alt="DukeGuessr Logo"
         width="200px"
         height="auto"
-        mt={20}
+        mt={10}
       />
-      <Heading as="h1" size="xl" mt={200}>
+      <VStack spacing="50px">
+        <Heading as="h1" size="xl" mt={200}>
         Welcome to DukeGuessr!
-      </Heading>
-      <Link href="/games" style={{ display: 'inline-block' }}>
-      <Button
-          mt={20}
-          fontSize='15'
-          padding='20px 30px'
-          _hover={{ bg: 'lightgrey'}}
-        >
-          {"Let's Go!"}
-        </Button>
-      </Link>
+        </Heading>
+        <Link href="/games" style={{ display: 'inline-block' }}>
+        <Button
+            colorScheme='blue'
+            fontSize='15'
+            padding='20px 30px'
+            _hover={{ bg: 'lightgrey'}}
+            variant='outline'
+          >
+            {"Let's Go!"}
+          </Button>
+        </Link>
+      </VStack>
       <Footer></Footer>
     </Flex>
   );
