@@ -2,7 +2,7 @@
 
 import { Button, Box, Container, Stack, Icon, Space, Center, Image, Flex, Badge, Text, Heading } from "@chakra-ui/react";
 import Link from 'next/link';
-import Footer from 'src/app/components/Footer';
+import Footer from '../components/footer';
 import styles from './page.module.css';
 
 
