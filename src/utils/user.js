@@ -1,4 +1,13 @@
+import { query } from "./db";
+
+export async function getUsers() {
+    const text = await query("SELECT * FROM TEST_TABLE");
+    return text.rows;
+}
+
 export async function getUser(uuid) {
+    // mocked data
+
     return {
         "uuid": uuid,
         "username": "abcdefgh",
