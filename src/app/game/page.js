@@ -1,19 +1,28 @@
 "use client"
 import { createGame } from "@/utils/game";
+import { useState, useEffect } from "react";
 
-// export async function getServerSideProps() {
-//     const uuid = 5; // add authentication later;
-//     const res = await createGame(uuid);
-//     return {props: res};    
-// }
-
-export default async function Game() {
+export default function Game() {
     const uuid = 5;
+    const [game, setGame] = useState(null);
     
-    const game = await createGame();
-
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await createGame();
+                        
+            setGame(response);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+        
+        fetchData();
+      }, []);
+      
+    
     return <>
-        {game.questions.map((q) => <>
+        {game && game.questions.map((q) => <>
             <p>Hi</p>
             <img src={q.url}/>
             <p>{q.lat} {q.lon}</p>
