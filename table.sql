@@ -7,7 +7,7 @@ CREATE TABLE Account(
 CREATE TABLE Game(
     game_id INTEGER NOT NULL PRIMARY KEY,
     score INTEGER,
-    mode VARCHAR(20) NOT NULL,
+    mode VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE Records(
