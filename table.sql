@@ -13,7 +13,7 @@ CREATE TABLE Game(
 CREATE TABLE Records(
     username VARCHAR(256) NOT NULL PRIMARY KEY REFERENCES Account(username),
     high_score INTEGER,
-    avg_score INTEGER,
+    avg_score DECIMAL,
     games_played INTEGER
 );
 
