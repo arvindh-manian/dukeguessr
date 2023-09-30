@@ -5,7 +5,7 @@ export default async function User({ params }) {
     const user = await getUser(params.uuid);
     return <>
         <center>
-        <h1>{user.username}'s userpage</h1>
+        <h1>{user.username}&apos;s userpage</h1>
         <p>email: {user.email}</p><br></br>
         <img src={user.avatar}></img>
         <h2>Records:</h2>
