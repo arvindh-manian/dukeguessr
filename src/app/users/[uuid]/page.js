@@ -1,5 +1,4 @@
 import { getUser } from "@/utils/user";
-import { NextResponse } from "next/server";
 
 export default async function User({ params }) {
     const user = await getUser(params.uuid);

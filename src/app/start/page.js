@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, Box, Container, Stack, Icon, Space, Center, Image, Flex, Badge, Text, Heading } from "@chakra-ui/react";
 import Link from 'next/link';
 import Footer from 'src/app/components/Footer';
@@ -29,7 +31,7 @@ export default function Start() {
           padding='20px 30px'
           _hover={{ bg: 'lightgrey'}}
         >
-          Let's Go!
+          {"Let's Go!"}
         </Button>
       </Link>
       <Footer></Footer>
