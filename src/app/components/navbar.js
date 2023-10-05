@@ -31,16 +31,21 @@ export default function Navbar() {
                     mx="auto">
                     <Flex>
                         <chakra.a
-                            href="/"
-                            title="DukeGuessr Home Page"
-                            display="flex"
-                            alignItems="center"
-                            variant="ghost">
-                            <VisuallyHidden>DukeGuessr</VisuallyHidden>
+                            href="#"
+                            fontSize="xl"
+                            fontWeight="medium"
+                            color="black"
+                            _dark={{
+                                color: "white",
+                                _hover: {
+                                    color: "gray.300",
+                                },
+                            }}
+                            _hover={{
+                                color: "gray.700",
+                            }}>
+                            DukeGuessr
                         </chakra.a>
-                        <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">
-                            Dukeguessr
-                        </chakra.h1>
                     </Flex>
                     <HStack display="flex" alignItems="center" spacing={1}>
                         <HStack
