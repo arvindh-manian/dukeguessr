@@ -1,5 +1,6 @@
 'use client';
 
+import { Portal, PopoverFooter, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody } from "@chakra-ui/react";
 import { Spacer, Button, Box, Container, VStack, Icon, Space, Center, Image, Flex, Badge, Text, Heading } from "@chakra-ui/react";
 import Link from 'next/link';
 import Footer from '../components/footer';
@@ -13,6 +14,7 @@ export default function Start() {
       align="center"
       justify="flex-start"
       minH="100vh"
+      positive="relative"
     >
       <Image
         src="images/dg_logo.png"
@@ -37,6 +39,26 @@ export default function Start() {
           </Button>
         </Link>
       </VStack>
+      <Popover>
+        <PopoverTrigger>
+          <Button
+            size="xs"
+            colorScheme="red"
+            variant = "outline"
+            _hover={{ bg: "lightgrey"}}
+            >{"?"}</Button>
+        </PopoverTrigger>
+        <Portal>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverHeader>{"Instructions"}</PopoverHeader>
+            <PopoverCloseButton />
+            <PopoverBody>
+              {"Input game instructions here"}
+            </PopoverBody>
+          </PopoverContent>
+        </Portal>
+      </Popover>
       <Footer></Footer>
     </Flex>
   );
