@@ -8,12 +8,7 @@ import {
     VisuallyHidden,
     HStack,
     Button,
-    Box,
-    IconButton,
-    VStack,
-    CloseButton,
 } from "@chakra-ui/react";
-import { AiOutlineMenu } from "react-icons/ai";
 import React from "react";
 
 export default function Navbar() {
