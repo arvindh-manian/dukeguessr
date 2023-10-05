@@ -27,8 +27,6 @@ export default function User({ params }) {
                     setError(true);
                 }
             }
-
-
         };
 
         fetchUser();
@@ -42,7 +40,7 @@ export default function User({ params }) {
         return <p>Loading...</p>
     }
 
-    return user && <>
+    return <>
         <p>username: {user.username}</p>
         <p>email: {user.email}</p>
         <b>records:</b>

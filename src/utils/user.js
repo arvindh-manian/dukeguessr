@@ -6,8 +6,6 @@ export async function getUsers() {
 }
 
 export async function getUser(username) {
-    // mocked data
-
     const text = await query("SELECT * FROM account LEFT JOIN records ON records.username = account.username WHERE account.username=$1", [username]);
     return text.rows[0];
 }
