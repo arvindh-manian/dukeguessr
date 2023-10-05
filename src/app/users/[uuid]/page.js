@@ -7,9 +7,9 @@ export default async function User({ params }) {
         <p>email: {user.email}</p>
         <b>records:</b>
             <ul>
-                <li>high score: {user.records.high_score}</li>
-                <li>games played: {user.records.games_played}</li>
-                <li>average score: {user.records.avg_score}</li>
+                <li>high score: {user.high_score}</li>
+                <li>games played: {user.games_played}</li>
+                <li>average score: {user.avg_score}</li>
             </ul>
     </>
 }
