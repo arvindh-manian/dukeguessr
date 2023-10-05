@@ -31,7 +31,7 @@ export default function Navbar() {
                     mx="auto">
                     <Flex>
                         <chakra.a
-                            href="#"
+                            href="/"
                             fontSize="xl"
                             fontWeight="medium"
                             color="black"
