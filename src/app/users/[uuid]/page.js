@@ -9,18 +9,26 @@ export default function User({ params }) {
 
     useEffect(() => {
         const fetchUser = async () => {
-            try {
-                if (!error && loading) {
-                    const resp = await fetch(`/api/users/${params.uuid}`);
+            if (!error && loading) {
+                let resp;
+                try {
+                    resp = await fetch(`/api/users/${params.uuid}`);
+                    if (!resp.ok) {
+                        setError(true);
+                        return;
+                    }
                     const text = await resp.json();
                     setUser(text);
                     setLoading(false);
+
+                }
+
+                catch {
+                    setError(true);
                 }
             }
 
-            catch (error) {
-                setError(true);
-            }
+
         };
 
         fetchUser();

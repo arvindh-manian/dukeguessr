@@ -8,6 +8,6 @@ export async function GET(request, {params}) {
     }
 
     else {
-        return NextResponse.error("User not found");
+        return NextResponse.json({error: "Something went wrong"}, {status: 500});
     }
 }
