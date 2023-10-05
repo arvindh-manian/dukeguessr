@@ -20,19 +20,19 @@ CREATE TABLE Records(
 CREATE TABLE Location(
     image_id INTEGER NOT NULL PRIMARY KEY,
     image_file VARCHAR(256) NOT NULL UNIQUE,
-    lat DECIMAL(8,6) NOT NULL,
-    long DECIMAL(9,6) NOT NULL
+    lat DECIMAL(8, 6) NOT NULL,
+    long DECIMAL(9, 6) NOT NULL
 );
 
 CREATE TABLE Mode(
     image_id INTEGER NOT NULL PRIMARY KEY REFERENCES Location(image_id),
     game_mode VARCHAR(20) NOT NULL
-)
+);
 
 CREATE TABLE Guess(
     image_id INTEGER NOT NULL PRIMARY KEY REFERENCES Location(image_id),
-    lat_guess DECIMAL(8,6) NOT NULL,
-    long_guess DECIMAL(9,6) NOT NULL
+    lat_guess DECIMAL(8, 6) NOT NULL,
+    long_guess DECIMAL(9, 6) NOT NULL
 );
 
 CREATE TABLE Play(
