@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import "./users.css";
 
 export default function User({ params }) {
     const [user, setUser] = useState(null);
@@ -41,13 +42,15 @@ export default function User({ params }) {
     }
 
     return <>
-        <p>username: {user.username}</p>
-        <p>email: {user.email}</p>
-        <b>records:</b>
+        <center>
+        <h1>{user.username}&apos;s userpage</h1>
+        <p>email: {user.email}</p><br></br>
+        <h2>Records:</h2>
             <ul>
-                <li>high score: {user.high_score}</li>
-                <li>games played: {user.games_played}</li>
-                <li>average score: {user.avg_score}</li>
+                <li>High score: {user.high_score}</li>
+                <li>Average score: {user.avg_score}</li>
+                <li>Games played: {user.games_played}</li>
             </ul>
+        </center>
     </>
 }
