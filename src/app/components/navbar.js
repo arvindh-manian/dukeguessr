@@ -44,10 +44,8 @@ export default function Navbar() {
                   md: "inline-flex",
                 }}
               >
-                <Button variant="ghost">Features</Button>
-                <Button variant="ghost">Pricing</Button>
-                <Button variant="ghost">Blog</Button>
-                <Button variant="ghost">Company</Button>
+                <Button variant="ghost">Leaderboard</Button>
+                <Button variant="ghost">Contact Us</Button>
                 <Button variant="ghost">Sign in</Button>
               </HStack>
               <Button colorScheme="brand" size="sm">
