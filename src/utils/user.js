@@ -1,7 +1,11 @@
 import { query } from "./db";
 
-export async function getUsers() {
-    const text = await query("SELECT * FROM TEST_TABLE");
+export async function getLeaderboard() {
+    const text = await query(`
+    SELECT *
+    FROM account
+    LEFT JOIN records ON records.username = account.username
+    ORDER BY records.high_score DESC NULLS LAST`);
     return text.rows;
 }
 
