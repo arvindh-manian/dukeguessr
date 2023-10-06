@@ -1,7 +1,30 @@
-'use client'
+"use client";
 
 import { useEffect, useState } from "react";
 import "./users.css";
+import {
+    HStack,
+    Heading,
+    StatLabel,
+    StatNumber,
+    Stat,
+    VStack,
+} from "@chakra-ui/react";
+
+const ComposedStat = ({ number, label }) => {
+    return (
+        <Stat
+            border="1px"
+            borderRadius={5}
+            borderColor="black"
+            bg="gray.50"
+            padding={2}
+            alignItems={"center"}>
+            <StatLabel>{label}</StatLabel>
+            <StatNumber>{number}</StatNumber>
+        </Stat>
+    );
+};
 
 export default function User({ params }) {
     const [user, setUser] = useState(null);
@@ -21,10 +44,7 @@ export default function User({ params }) {
                     const text = await resp.json();
                     setUser(text);
                     setLoading(false);
-
-                }
-
-                catch {
+                } catch {
                     setError(true);
                 }
             }
@@ -34,23 +54,33 @@ export default function User({ params }) {
     });
 
     if (error) {
-        return <p>User not found</p>
+        return <p>User not found</p>;
     }
 
     if (loading) {
-        return <p>Loading...</p>
+        return <p>Loading...</p>;
     }
 
-    return <>
-        <center>
-        <h1>{user.username}&apos;s userpage</h1>
-        <p>email: {user.email}</p><br></br>
-        <h2>Records:</h2>
-            <ul>
-                <li>High score: {user.high_score}</li>
-                <li>Average score: {user.avg_score}</li>
-                <li>Games played: {user.games_played}</li>
-            </ul>
-        </center>
-    </>
+    return (
+        <>
+            <VStack>
+                <Heading>{user.username}</Heading>
+                <h1>
+                    {user.username}&apos;s userpage | {user.email}
+                </h1>
+                <br></br>
+                <HStack justifyContent={"space-between"} w={"80vw"}>
+                    <ComposedStat
+                        number={user.games_played}
+                        label="Games played"></ComposedStat>
+                    <ComposedStat
+                        number={user.avg_score}
+                        label="Average score"></ComposedStat>
+                    <ComposedStat
+                        number={user.high_score}
+                        label="High score"></ComposedStat>
+                </HStack>
+            </VStack>
+        </>
+    );
 }

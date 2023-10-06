@@ -5,7 +5,7 @@ CREATE TABLE Account(
 );
 
 CREATE TABLE Game(
-    game_id INTEGER NOT NULL PRIMARY KEY,
+    game_id SERIAL NOT NULL PRIMARY KEY,
     score INTEGER,
     mode VARCHAR(20) NOT NULL
 );
