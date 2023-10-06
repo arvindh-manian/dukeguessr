@@ -1,4 +1,5 @@
 "use client";
+import {useState} from "react";
 
 import {
     Portal,
@@ -19,9 +20,9 @@ import {
     Container,
     VStack,
     Icon,
-    Input,
     Space,
     Center,
+    Input,
     Image,
     Flex,
     Badge,
@@ -30,10 +31,31 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Footer from "../components/footer";
-import PasswordInput from "../components/passwordblock.js";
 import styles from "./page.module.css";
 
 export default function Start() {
+    const handleButtonClick = async () => {
+        try {
+            const res = await fetch("/api/users", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password
+                })
+            })
+        } catch (error) {
+            console.error('There was an error inserting the data!', error);
+        }
+    };
+
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     return (
         <Flex
             direction="column"
@@ -50,22 +72,21 @@ export default function Start() {
             />
             <VStack spacing="10px">
                 <Heading as="h1" size="xl" mt={200}>
-                    Sign Up for DukeGuessr!
+                    Sign Up For DukeGuessr!
                 </Heading>
                 <HStack>
-                    <Link href="/games" style={{ display: "inline-block" }}>
-                        <Button
-                            colorScheme="blue"
-                            fontSize="15"
-                            padding="20px 30px"
-                            _hover={{ bg: "lightgrey" }}
-                            variant="outline">
-                            {"Sign Up!"}
-                        </Button>
-                    </Link>
-                    <Input placeholder='Enter Username' size='md' />
-                    <Input placeholder='Enter Email' size='md' />
-                    <PasswordInput/>
+                    <Button 
+                        onClick={handleButtonClick}
+                        colorScheme="blue"
+                        fontSize="15"
+                        padding="20px 30px"
+                        _hover={{ bg: "lightgrey" }}
+                        variant="outline">
+                        {"Let's Go!"}
+                    </Button>
+                    <Input placeholder='Enter Username' size='md' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <Input placeholder='Enter Email' size='md' value ={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <Input placeholder='Enter Password' size='md' value={password} onChange={(e) => setPassword(e.target.value)}/>
                     <Popover>
                         <PopoverTrigger>
                             <Button
