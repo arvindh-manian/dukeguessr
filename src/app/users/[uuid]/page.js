@@ -21,7 +21,7 @@ const ComposedStat = ({ number, label }) => {
             padding={2}
             alignItems={"center"}>
             <StatLabel>{label}</StatLabel>
-            <StatNumber>{number}</StatNumber>
+            <StatNumber>{number ? number : "-"}</StatNumber>
         </Stat>
     );
 };
@@ -71,7 +71,7 @@ export default function User({ params }) {
                 <br></br>
                 <HStack justifyContent={"space-between"} w={"80vw"}>
                     <ComposedStat
-                        number={user.games_played}
+                        number={user.games_played || "0"}
                         label="Games played"></ComposedStat>
                     <ComposedStat
                         number={user.avg_score}
