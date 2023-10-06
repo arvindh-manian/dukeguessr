@@ -20,6 +20,9 @@ try:
     print("Executing SQL Query...")
     product_list = cursor.fetchall()
 
+    for row in product_list:
+        print(row)
+
 except (Exception, psycopg2.Error) as error:
     print("Error while fetching data from PostgreSQL", error)
 
