@@ -29,6 +29,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Footer from "../components/footer";
+import PasswordInput from "../components/passwordblock.js";
 import styles from "./page.module.css";
 
 export default function Start() {
@@ -46,9 +47,9 @@ export default function Start() {
                 height="auto"
                 mt={10}
             />
-            <VStack spacing="50px">
+            <VStack spacing="10px">
                 <Heading as="h1" size="xl" mt={200}>
-                    Welcome to DukeGuessr!
+                    Sign Up for DukeGuessr!
                 </Heading>
                 <HStack>
                     <Link href="/games" style={{ display: "inline-block" }}>
@@ -58,9 +59,12 @@ export default function Start() {
                             padding="20px 30px"
                             _hover={{ bg: "lightgrey" }}
                             variant="outline">
-                            {"Let's Go!"}
+                            {"Sign Up!"}
                         </Button>
                     </Link>
+                    <Input placeholder='Enter Username' size='md' />
+                    <Input placeholder='Enter Email' size='md' />
+                    <PasswordInput/>
                     <Popover>
                         <PopoverTrigger>
                             <Button
