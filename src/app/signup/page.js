@@ -1,4 +1,5 @@
 "use client";
+import {useState} from "react";
 
 import {
     Portal,
@@ -21,6 +22,7 @@ import {
     Icon,
     Space,
     Center,
+    Input,
     Image,
     Flex,
     Badge,
@@ -32,6 +34,28 @@ import Footer from "../components/footer";
 import styles from "./page.module.css";
 
 export default function Start() {
+    const handleButtonClick = async () => {
+        try {
+            const res = await fetch("/api/users", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password
+                })
+            })
+        } catch (error) {
+            console.error('There was an error inserting the data!', error);
+        }
+    };
+
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     return (
         <Flex
             direction="column"
@@ -46,21 +70,23 @@ export default function Start() {
                 height="auto"
                 mt={10}
             />
-            <VStack spacing="50px">
+            <VStack spacing="10px">
                 <Heading as="h1" size="xl" mt={200}>
-                    Welcome to DukeGuessr!
+                    Sign Up For DukeGuessr!
                 </Heading>
                 <HStack>
-                    <Link href="/games" style={{ display: "inline-block" }}>
-                        <Button
-                            colorScheme="blue"
-                            fontSize="15"
-                            padding="20px 30px"
-                            _hover={{ bg: "lightgrey" }}
-                            variant="outline">
-                            {"Let's Go!"}
-                        </Button>
-                    </Link>
+                    <Button 
+                        onClick={handleButtonClick}
+                        colorScheme="blue"
+                        fontSize="15"
+                        padding="20px 30px"
+                        _hover={{ bg: "lightgrey" }}
+                        variant="outline">
+                        {"Let's Go!"}
+                    </Button>
+                    <Input placeholder='Enter Username' size='md' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <Input placeholder='Enter Email' size='md' value ={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <Input placeholder='Enter Password' size='md' value={password} onChange={(e) => setPassword(e.target.value)}/>
                     <Popover>
                         <PopoverTrigger>
                             <Button
