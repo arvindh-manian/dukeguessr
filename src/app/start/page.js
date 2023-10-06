@@ -1,18 +1,6 @@
 "use client";
 
 import {
-    Portal,
-    PopoverFooter,
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-    PopoverArrow,
-    PopoverCloseButton,
-    PopoverHeader,
-    PopoverBody,
-    HStack,
-} from "@chakra-ui/react";
-import {
     Spacer,
     Button,
     Box,
@@ -26,6 +14,7 @@ import {
     Badge,
     Text,
     Heading,
+    HStack
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Footer from "../components/footer";
@@ -47,13 +36,13 @@ export default function Start() {
                 mt={10}
             />
             <VStack spacing="50px">
-                <Heading as="h1" size="xl" mt={200}>
+                <Heading as="h1" size="xl" mt={100}>
                     Welcome to DukeGuessr!
                 </Heading>
                 <HStack>
                     <Link href="/game" style={{ display: "inline-block" }}>
                         <Button
-                            colorScheme="blue"
+                            colorScheme="black"
                             fontSize="15"
                             padding="20px 30px"
                             _hover={{ bg: "lightgrey" }}
@@ -61,41 +50,8 @@ export default function Start() {
                             {"Let's Go!"}
                         </Button>
                     </Link>
-                    <Popover>
-                        <PopoverTrigger>
-                            <Button
-                                size="xs"
-                                colorScheme="red"
-                                variant="outline"
-                                _hover={{ bg: "lightgrey" }}>
-                                {"?"}
-                            </Button>
-                        </PopoverTrigger>
-                        <Portal>
-                            <PopoverContent>
-                                <PopoverArrow />
-                                <PopoverHeader>{"Instructions"}</PopoverHeader>
-                                <PopoverCloseButton />
-                                <PopoverBody>
-                                    {"Input game instructions here"}
-                                </PopoverBody>
-                            </PopoverContent>
-                        </Portal>
-                    </Popover>
                 </HStack>
             </VStack>
         </Flex>
     );
 }
-
-/*import { Button, Box, Center, Image, Flex, Badge, Text } from "@chakra-ui/react";
-
-export default function Start() {
-  return (
-    <div>
-      <Center>Welcome to DukeGuessr!</Center>
-      <Button>Start Game</Button>
-
-    </div>
-  )
-}*/
