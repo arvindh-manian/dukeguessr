@@ -9,6 +9,8 @@ import {
     HStack,
     Button,
 } from "@chakra-ui/react";
+import Link from "next/link";
+import Instruct from "../components/instruct";
 import React from "react";
 
 export default function Navbar() {
@@ -31,7 +33,7 @@ export default function Navbar() {
                     mx="auto">
                     <Flex>
                         <chakra.a
-                            href="/"
+                            href="/start"
                             fontSize="xl"
                             fontWeight="medium"
                             color="black"
@@ -56,9 +58,12 @@ export default function Navbar() {
                                 base: "none",
                                 md: "inline-flex",
                             }}>
-                            <Button variant="ghost">Leaderboard</Button>
+                            <Link href="/users/leaderboard" style={{ display: "inline-block" }}>
+                                <Button variant="ghost">Leaderboard</Button>
+                            </Link>
                             <Button variant="ghost">Contact Us</Button>
                             <Button variant="ghost">Sign in</Button>
+                            <Instruct></Instruct>
                         </HStack>
                     </HStack>
                 </Flex>
