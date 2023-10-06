@@ -51,7 +51,7 @@ export default function Start() {
                     Welcome to DukeGuessr!
                 </Heading>
                 <HStack>
-                    <Link href="/games" style={{ display: "inline-block" }}>
+                    <Link href="/game" style={{ display: "inline-block" }}>
                         <Button
                             colorScheme="blue"
                             fontSize="15"
