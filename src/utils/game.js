@@ -1,7 +1,10 @@
 import { query } from "./db";
 
 export async function createGame(uuid) {
-    await query("INSERT INTO game VALUES (1, 0, 'test'");
-    const text = await query("SELECT * FROM location WHERE image_id = 1");
-    return {"locations": text.rows[0]};
+    const temp_id = await query("INSERT INTO game VALUES(DEFAULT, NULL, 'test') RETURNING game_id");
+    const text = await query("SELECT * FROM location ORDER BY RANDOM () LIMIT 5");
+    for (let i = 0; i < 5; i++) {
+        await query("INSERT INTO element VALUES ($1, $2)", [temp_id.rows[0].game_id, text.rows[i].image_id]);
+    }
+    return text.rows;
 }
