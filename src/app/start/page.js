@@ -84,7 +84,6 @@ export default function Start() {
                     </Popover>
                 </HStack>
             </VStack>
-            <Footer></Footer>
         </Flex>
     );
 }
