@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 
 export default function Game() {
-    const uuid = 1;
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
