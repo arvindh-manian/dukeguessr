@@ -1,5 +1,19 @@
 "use client";
 
+import {
+  Heading,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  Button,
+} from "@chakra-ui/react";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Game() {
@@ -38,10 +52,18 @@ export default function Game() {
     }
     
     return <>
+      <div>
         {game && game.map((q) => <>
-            <p>Hi</p>
             <img src={q.image_file}/>
-            <p>{q.lat} {q.long}</p>
         </>)}
+      </div>
+      <Button
+        colorScheme="black"
+        fontSize="15"
+        padding="20px 30px"
+        _hover={{ bg: "lightgrey" }}
+        variant="outline">
+        {"Next location"}
+      </Button>
     </>
 }
