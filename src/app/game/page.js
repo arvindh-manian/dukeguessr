@@ -1,17 +1,10 @@
 "use client";
 
 import {
-  Heading,
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
   Button,
+  Input,
+  HStack,
+  VStack
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -53,15 +46,27 @@ export default function Game() {
     }
     
     return <>
-      <img src={game[imageIndex].image_file}/>
-      <Button
-        onClick={() => setImageIndex(imageIndex >= 4 ? imageIndex : imageIndex + 1)}
-        colorScheme="black"
-        fontSize="15"
-        padding="20px 30px"
-        _hover={{ bg: "lightgrey" }}
-        variant="outline">
-        {"Next location"}
-      </Button>
+    <VStack spacing="10px">
+        <img src={game[imageIndex].image_file}/>
+        <HStack>
+          <Input
+            placeholder="Latitude"
+            type="number"
+          />
+          <Input
+            placeholder="Longitude"
+            type="number"
+          />
+        </HStack>
+        <Button
+          onClick={() => setImageIndex(imageIndex >= 4 ? imageIndex : imageIndex + 1)}
+          colorScheme="black"
+          fontSize="15"
+          padding="20px 30px"
+          _hover={{ bg: "lightgrey" }}
+          variant="outline">
+          {"Next location"}
+        </Button>
+      </VStack>
     </>
 }
