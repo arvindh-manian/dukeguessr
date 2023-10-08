@@ -3,7 +3,7 @@ import { getLeaderboard } from "@/utils/user";
 export async function GET(request, {params}) {
     const resp = await getLeaderboard();
     if (resp) {
-        return NextResponse.json(resp);
+        return NextResponse.json(resp).setHeader('Cache-Control', 'no-store');;
     }
 
     else {
