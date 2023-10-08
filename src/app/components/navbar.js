@@ -58,11 +58,17 @@ export default function Navbar() {
                                 base: "none",
                                 md: "inline-flex",
                             }}>
-                            <Link href="/users/leaderboard" style={{ display: "inline-block" }}>
+                            <Link
+                                href="/users/leaderboard"
+                                style={{ display: "inline-block" }}>
                                 <Button variant="ghost">Leaderboard</Button>
                             </Link>
                             <Button variant="ghost">Contact Us</Button>
-                            <Button variant="ghost">Sign in</Button>
+                            <Link
+                                href="/signup"
+                                style={{ display: "inline-block" }}>
+                                <Button variant="ghost">Sign in</Button>
+                            </Link>
                             <Instruct></Instruct>
                         </HStack>
                     </HStack>

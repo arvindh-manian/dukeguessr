@@ -1,5 +1,5 @@
 "use client";
-import {useState} from "react";
+import { useState } from "react";
 
 import {
     Portal,
@@ -37,24 +37,24 @@ export default function Start() {
     const handleButtonClick = async () => {
         try {
             const res = await fetch("/api/users", {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     username,
                     email,
-                    password
-                })
-            })
+                    password,
+                }),
+            });
         } catch (error) {
-            console.error('There was an error inserting the data!', error);
+            console.error("There was an error inserting the data!", error);
         }
     };
 
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     return (
         <Flex
@@ -75,39 +75,33 @@ export default function Start() {
                     Sign Up For DukeGuessr!
                 </Heading>
                 <HStack>
-                    <Button 
+                    <Input
+                        placeholder="Enter Username"
+                        size="md"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <Input
+                        placeholder="Enter Email"
+                        size="md"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Input
+                        placeholder="Enter Password"
+                        size="md"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Button
                         onClick={handleButtonClick}
                         colorScheme="blue"
                         fontSize="15"
                         padding="20px 30px"
                         _hover={{ bg: "lightgrey" }}
                         variant="outline">
-                        {"Let's Go!"}
+                        {"Submit!"}
                     </Button>
-                    <Input placeholder='Enter Username' size='md' value={username} onChange={(e) => setUsername(e.target.value)}/>
-                    <Input placeholder='Enter Email' size='md' value ={email} onChange={(e) => setEmail(e.target.value)}/>
-                    <Input placeholder='Enter Password' size='md' value={password} onChange={(e) => setPassword(e.target.value)}/>
-                    <Popover>
-                        <PopoverTrigger>
-                            <Button
-                                size="xs"
-                                colorScheme="red"
-                                variant="outline"
-                                _hover={{ bg: "lightgrey" }}>
-                                {"?"}
-                            </Button>
-                        </PopoverTrigger>
-                        <Portal>
-                            <PopoverContent>
-                                <PopoverArrow />
-                                <PopoverHeader>{"Instructions"}</PopoverHeader>
-                                <PopoverCloseButton />
-                                <PopoverBody>
-                                    {"Input game instructions here"}
-                                </PopoverBody>
-                            </PopoverContent>
-                        </Portal>
-                    </Popover>
                 </HStack>
             </VStack>
             <Footer></Footer>
