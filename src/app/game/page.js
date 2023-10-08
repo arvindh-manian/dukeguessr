@@ -20,6 +20,7 @@ export default function Game() {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [imageIndex, setImageIndex] = useState(0);
     
     useEffect(() => {
         const fetchData = async () => {
@@ -52,12 +53,9 @@ export default function Game() {
     }
     
     return <>
-      <div>
-        {game && game.map((q) => <>
-            <img src={q.image_file}/>
-        </>)}
-      </div>
+      <img src={game[imageIndex].image_file}/>
       <Button
+        onClick={() => setImageIndex(imageIndex >= 4 ? imageIndex : imageIndex + 1)}
         colorScheme="black"
         fontSize="15"
         padding="20px 30px"
