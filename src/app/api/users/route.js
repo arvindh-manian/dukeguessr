@@ -12,7 +12,7 @@ export async function GET(request) {
     })
 }
 
-export async function POST(request, {params}) {
+export async function POST(request) {
     const body = await request.json();
     const username = body.username;
     const password = body.password;

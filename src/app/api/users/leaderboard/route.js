@@ -10,3 +10,6 @@ export async function GET(request, {params}) {
         return NextResponse.json({error: "Something went wrong"}, {status: 500});
     }
 }
+
+export const revalidate = 0;
+//export const fetchCache = 'force-no-store';

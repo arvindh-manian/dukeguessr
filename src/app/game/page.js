@@ -12,7 +12,7 @@ export default function Game() {
           if (!error && loading) {
             let resp;
             try {
-              resp = await fetch(`/api/games/start`)
+              resp = await fetch(`/api/games/start`, {method: "POST"})
               if (!resp.ok) {
                 setError(true);
                 return;
