@@ -8,8 +8,10 @@ const nextConfig = {
               {
                 key:'Cache-Control',
                 value: 'max-age=1',
+              },
+              {
                 key: 'CDN-Cache-Control',
-                value: 'max-age=1'
+                value: 'max-age=1',
               },
             ],
           },
