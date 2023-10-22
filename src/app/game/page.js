@@ -46,8 +46,9 @@ export default function Game() {
       return <p>Loading...</p>;
     }
     
+    if (imageIndex <= 4) {
     return <>
-    <VStack spacing="10px">
+      <VStack spacing="10px">
         <img src={game[imageIndex].image_file}/>
         <HStack>
           <Input
@@ -65,12 +66,10 @@ export default function Game() {
           onClick={() => {
             var in1 = document.getElementById("latIn")
             var in2 = document.getElementById("longIn")
-            if (imageIndex < 4) {
-              setScore(score + (in1.value - game[imageIndex].lat) + (in2.value - game[imageIndex].long))
-              setImageIndex(imageIndex + 1)
-              in1.value = ''
-              in2.value = ''
-            }}
+            setScore(score + (in1.value - game[imageIndex].lat) + (in2.value - game[imageIndex].long))
+            setImageIndex(imageIndex + 1)
+            in1.value = ''
+            in2.value = ''}
           }
           colorScheme="black"
           fontSize="15"
@@ -84,4 +83,7 @@ export default function Game() {
       </h1>
       </VStack>
     </>
+    }
+
+    return <><h1>good job you did 5 guesses your score was {score}</h1></>
 }
