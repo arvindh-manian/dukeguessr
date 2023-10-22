@@ -21,5 +21,6 @@ export async function addUser(username, email, password) {
     `
 
     const text = await query(insertQuery, [username, email, password]);
+    revalidatePath("/users/leaderboard");
     return;
 }
