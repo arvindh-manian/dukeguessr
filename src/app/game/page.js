@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Map from "../components/map";
 
 export default function Game() {
     const [game, setGame] = useState(null);
@@ -43,5 +44,6 @@ export default function Game() {
             <img src={q.image_file}/>
             <p>{q.lat} {q.long}</p>
         </>)}
+        <Map></Map>
     </>
 }
