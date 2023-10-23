@@ -7,7 +7,7 @@ export const options = {
         CredentialsProvider({
             name: "Credentials",
             credentials: {
-                username: {
+                name: {
                     label: "Username:",
                     type: "text",
                     placeholder: "bolgar_the_destroyer",
@@ -18,7 +18,7 @@ export const options = {
                 },
             },
             async authorize(credentials) {
-                const user = await getUser(credentials.username);
+                const user = await getUser(credentials.name);
                 if (user && user.password === credentials.password) {
                     return user;
                 }
