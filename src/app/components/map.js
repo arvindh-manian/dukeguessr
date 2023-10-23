@@ -1,15 +1,19 @@
 "use client";
 import React from 'react';
+import { useState } from "react";
+
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 
-const Map = () => {
+const Map = ( {onMarkerPositionChange} ) => {
+    const [marker, setMarker] = useState(null);
+    const center = { lat: 36.0014, lng: -78.9382 };
+
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GM_KEY,
     });
-
-    const center = { lat: 36.0014, lng: -78.9382 };
-    var marker;
+    
     const handleMapLoad = (map) => {
+        console.log("handleMapLoad called");
         map.addListener("click", (e) => {
             placeMarker(e.latLng, map);
         });
@@ -17,15 +21,23 @@ const Map = () => {
 
     const placeMarker = (latLng, map) => {
         if(marker){
+            console.log("Updating marker position");
             marker.setPosition(latLng);
         }
         else{
-            marker = new window.google.maps.Marker({
+            const newMarker = new window.google.maps.Marker({
                 position: latLng,
                 map: map,
             });
+            setMarker(newMarker);
+            console.log("newmarker to marker: ", marker);
         }
         map.panTo(latLng);
+        const lat = latLng.lat();
+        const lng = latLng.lng();
+        console.log("Coordinates:", lat, lng);
+        onMarkerPositionChange({ lat, lng });
+        //console.log("marker: ", marker);
     };
 
     if (!isLoaded) {
