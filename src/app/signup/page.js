@@ -47,6 +47,7 @@ export default function Start() {
                     password,
                 }),
             });
+            console.log("trying this");
         } catch (error) {
             console.error("There was an error inserting the data!", error);
         }

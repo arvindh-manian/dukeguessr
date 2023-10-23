@@ -25,7 +25,7 @@ export default function Leaderboard({ params }) {
             if (!error && loading) {
                 let resp;
                 try {
-                    resp = await fetch(`/api/users/leaderboard`);
+                    resp = await fetch(`/api/users/leaderboard`);//, {next: { revalidate: 0 }});
                     if (!resp.ok) {
                         setError(true);
                         return;
