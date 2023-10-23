@@ -1,7 +1,8 @@
 "use client";
 import React from 'react';
+import { useState, useEffect } from "react";
+
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-import { Box, Center, Heading, Text } from '@chakra-ui/react';
 
 const Map = () => {
     const { isLoaded } = useJsApiLoader({
@@ -9,7 +10,7 @@ const Map = () => {
     });
 
     const center = { lat: 36.0014, lng: -78.9382 };
-    var marker;
+    const [marker, setMarker] = useState(null);
     
     const handleMapLoad = (map) => {
         map.addListener("click", (e) => {
@@ -22,13 +23,18 @@ const Map = () => {
             marker.setPosition(latLng);
         }
         else{
-            marker = new window.google.maps.Marker({
+            const newMarker = new window.google.maps.Marker({
                 position: latLng,
                 map: map,
             });
+            setMarker(newMarker);
         }
         map.panTo(latLng);
-        console.log(marker.getPosition().lat(), marker.getPosition().lng())
+        
+        const lat = latLng.lat();
+        const lng = latLng.lng();
+        console.log("Coordinates:", lat, lng);
+        onMarkerPositionChange({ lat, lng });
     };
 
     if (!isLoaded) {
@@ -36,14 +42,14 @@ const Map = () => {
     }
 
     return (
-        <Center w="100%" h="100vh">
+        <div style={{ width: '50%', height: '50vh' }}>
             <GoogleMap
                 center={center}
                 zoom={15}
                 mapContainerStyle={{ width: '100%', height: '100%' }}
                 onLoad={handleMapLoad}
             />
-        </Center>
+        </div>
     );
 };
 
