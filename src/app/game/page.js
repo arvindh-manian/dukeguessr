@@ -1,12 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Map from "../components/map";
 
 export default function Game() {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    
+    const [markerPosition, setMarkerPosition] = useState(null);
+
+    const handleMarkerPositionChange = (position) => {
+        setMarkerPosition(position);
+    };
+
     useEffect(() => {
         const fetchData = async () => {
           if (!error && loading) {
@@ -43,5 +49,12 @@ export default function Game() {
             <img src={q.image_file}/>
             <p>{q.lat} {q.long}</p>
         </>)}
+        <Map onMarkerPositionChange={handleMarkerPositionChange}></Map>
+        {markerPosition && (
+                <div>
+                    <p>Latitude: {markerPosition.lat}</p>
+                    <p>Longitude: {markerPosition.lng}</p>
+                </div>
+            )}
     </>
 }
