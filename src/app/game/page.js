@@ -16,6 +16,7 @@ export default function Game() {
     const [error, setError] = useState(false);
     const [score, setScore] = useState(0);
     const [imageIndex, setImageIndex] = useState(0);
+    const [resultPage, setResultPage] = useState(false);
     const [markerPosition, setMarkerPosition] = useState(null);
 
     const handleMarkerPositionChange = (position) => {
@@ -52,7 +53,7 @@ export default function Game() {
       return <p>Loading...</p>;
     }
     
-    if (imageIndex <= 4) {
+    if (imageIndex <= 4 && !resultPage) {
     return <>
       <VStack spacing="10px">
         <img src={game[imageIndex].image_file}/>
@@ -65,9 +66,9 @@ export default function Game() {
             )}
         <Button
           onClick={() => {
-            console.log(markerPosition.lat, markerPosition.lng)
             setScore(score + (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long))
-            setImageIndex(imageIndex + 1)}
+            setImageIndex(imageIndex + 1)
+            setResultPage(true)}
           }
           colorScheme="black"
           fontSize="15"
@@ -81,6 +82,25 @@ export default function Game() {
       </h1>
       </VStack>
     </>
+    }
+
+    if (imageIndex <= 4 && resultPage) {
+      return <>
+        <VStack spacing="10px">
+          <Map onMarkerPositionChange={handleMarkerPositionChange}></Map>
+          <Button
+            onClick={() => {
+              setResultPage(false)}
+            }
+            colorScheme="black"
+            fontSize="15"
+            padding="20px 30px"
+            _hover={{ bg: "lightgrey" }}
+            variant="outline">
+            {"Next Location"}
+          </Button>
+        </VStack>
+      </>
     }
 
     return <><h1>good job you did 5 guesses your score was {score}</h1></>
