@@ -8,17 +8,18 @@ import {
     Tr,
     Th,
     Td,
-    TableCaption,
     TableContainer,
     Button,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Leaderboard({ params }) {
     const [leaderboard, setLeaderboard] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const { data: session } = useSession();
 
     useEffect(() => {
         const fetchLeaderboard = async () => {
@@ -75,7 +76,17 @@ export default function Leaderboard({ params }) {
                         <Tbody>
                             {leaderboard.map((user) => (
                                 <Tr key={user.username}>
-                                    <Td>{user.username}</Td>
+                                    {session &&
+                                        user.username === session.user.name && (
+                                            <Td>
+                                                <b>{user.username}</b>
+                                            </Td>
+                                        )}
+                                    {!session ||
+                                        (user.username !==
+                                            session.user.name && (
+                                            <Td>{user.username}</Td>
+                                        ))}
                                     <Td>
                                         {user.high_score
                                             ? user.high_score

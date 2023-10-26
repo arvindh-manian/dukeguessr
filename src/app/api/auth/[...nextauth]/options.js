@@ -20,7 +20,11 @@ export const options = {
             async authorize(credentials) {
                 const user = await getUser(credentials.name);
                 if (user && user.password === credentials.password) {
-                    return user;
+                    const retUser = {
+                        name: user.username,
+                        email: user.email,
+                    };
+                    return retUser;
                 }
 
                 return null;

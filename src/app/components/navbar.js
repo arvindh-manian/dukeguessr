@@ -17,7 +17,6 @@ export default function Navbar() {
     const bg = useColorModeValue("white", "gray.800");
     const mobileNav = useDisclosure();
     const { data: session } = useSession();
-    console.log(session);
     return (
         <React.Fragment>
             <chakra.header
@@ -75,7 +74,7 @@ export default function Navbar() {
                                         <Button variant="ghost">Logout</Button>
                                     </Link>
                                     <Link
-                                        href={`/users/${session.user.username}`}
+                                        href={`/users/${session.user.name}`}
                                         style={{ display: "inline-block" }}>
                                         <Button variant="ghost">Profile</Button>
                                     </Link>
