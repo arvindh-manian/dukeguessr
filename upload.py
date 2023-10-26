@@ -1,5 +1,7 @@
 import sys
 import psycopg2
+from PIL import Image
+from PIL.ExifTags import TAGS
 
 def get_env_data_as_dict(path: str) -> dict:
     with open(path, 'r') as f:
@@ -7,7 +9,7 @@ def get_env_data_as_dict(path: str) -> dict:
                 in f.readlines() if not line.startswith('#'))
 
 env = get_env_data_as_dict(".env.local")
-sql = sys.argv[1]
+sql_path = sys.argv[1]
 
 try:
     connection = psycopg2.connect(database=env["DB_NAME"],
@@ -17,7 +19,7 @@ try:
                         port="5432")
     cursor = connection.cursor()
     print("Executing SQL Query...")
-    cursor.execute(sql)
+    cursor.execute("SELECT * FROM Account;")
 
     for row in cursor:
         print(row)
