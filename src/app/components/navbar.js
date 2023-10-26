@@ -5,17 +5,18 @@ import {
     useDisclosure,
     chakra,
     Flex,
-    VisuallyHidden,
     HStack,
     Button,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Instruct from "../components/instruct";
 import React from "react";
+import { useSession } from "next-auth/react";
 
 export default function Navbar() {
     const bg = useColorModeValue("white", "gray.800");
     const mobileNav = useDisclosure();
+    const { data: session } = useSession();
     return (
         <React.Fragment>
             <chakra.header
@@ -64,11 +65,34 @@ export default function Navbar() {
                                 <Button variant="ghost">Leaderboard</Button>
                             </Link>
                             <Button variant="ghost">Contact Us</Button>
-                            <Link
-                                href="/signup"
-                                style={{ display: "inline-block" }}>
-                                <Button variant="ghost">Sign in</Button>
-                            </Link>
+                            {session ? (
+                                <>
+                                    {" "}
+                                    <Link
+                                        href="/api/auth/signout?callbackUrl=/start"
+                                        style={{ display: "inline-block" }}>
+                                        <Button variant="ghost">Logout</Button>
+                                    </Link>
+                                    <Link
+                                        href={`/users/${session.user.name}`}
+                                        style={{ display: "inline-block" }}>
+                                        <Button variant="ghost">Profile</Button>
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        href="/api/auth/signin"
+                                        style={{ display: "inline-block" }}>
+                                        <Button variant="ghost">Login</Button>
+                                    </Link>
+                                    <Link
+                                        href="/signup"
+                                        style={{ display: "inline-block" }}>
+                                        <Button variant="ghost">Sign Up</Button>
+                                    </Link>
+                                </>
+                            )}
                             <Instruct></Instruct>
                         </HStack>
                     </HStack>
