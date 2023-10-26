@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Map from "../components/map";
 
 export default function Game() {
     const [game, setGame] = useState(null);
@@ -15,6 +16,11 @@ export default function Game() {
     const [error, setError] = useState(false);
     const [score, setScore] = useState(0);
     const [imageIndex, setImageIndex] = useState(0);
+    const [markerPosition, setMarkerPosition] = useState(null);
+
+    const handleMarkerPositionChange = (position) => {
+        setMarkerPosition(position);
+    };
     
     useEffect(() => {
         const fetchData = async () => {
@@ -50,26 +56,18 @@ export default function Game() {
     return <>
       <VStack spacing="10px">
         <img src={game[imageIndex].image_file}/>
-        <HStack>
-          <Input
-            placeholder="Latitude"
-            type="number"
-            id="latIn"
-          />
-          <Input
-            placeholder="Longitude"
-            type="number"
-            id="longIn"
-          />
-        </HStack>
+        <Map onMarkerPositionChange={handleMarkerPositionChange}></Map>
+        {markerPosition && (
+                <div>
+                    <p>Latitude: {markerPosition.lat}</p>
+                    <p>Longitude: {markerPosition.lng}</p>
+                </div>
+            )}
         <Button
           onClick={() => {
-            var in1 = document.getElementById("latIn")
-            var in2 = document.getElementById("longIn")
-            setScore(score + (in1.value - game[imageIndex].lat) + (in2.value - game[imageIndex].long))
-            setImageIndex(imageIndex + 1)
-            in1.value = ''
-            in2.value = ''}
+            console.log(markerPosition.lat, markerPosition.lng)
+            setScore(score + (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long))
+            setImageIndex(imageIndex + 1)}
           }
           colorScheme="black"
           fontSize="15"
