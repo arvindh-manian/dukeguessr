@@ -26,7 +26,7 @@ export default function Leaderboard({ params }) {
             if (!error && loading) {
                 let resp;
                 try {
-                    resp = await fetch(`/api/users/leaderboard`);//, {next: { revalidate: 0 }});
+                    resp = await fetch(`/api/users/leaderboard`); //, {next: { revalidate: 0 }});
                     if (!resp.ok) {
                         setError(true);
                         return;
@@ -82,11 +82,11 @@ export default function Leaderboard({ params }) {
                                                 <b>{user.username}</b>
                                             </Td>
                                         )}
-                                    {!session ||
-                                        (user.username !==
-                                            session.user.name && (
-                                            <Td>{user.username}</Td>
-                                        ))}
+                                    {(!session ||
+                                        user.username !==
+                                            session.user.name) && (
+                                        <Td>{user.username}</Td>
+                                    )}
                                     <Td>
                                         {user.high_score
                                             ? user.high_score
