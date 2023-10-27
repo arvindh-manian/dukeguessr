@@ -87,10 +87,14 @@ export default function Game() {
     if (imageIndex <= 4 && resultPage) {
       return <>
         <VStack spacing="10px">
-          <Map onMarkerPositionChange={handleMarkerPositionChange}></Map>
+          <Map 
+            onMarkerPositionChange={handleMarkerPositionChange}
+            imageMarkerPosition={{lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)}}>
+          </Map>
           <Button
             onClick={() => {
               setResultPage(false)}
+
             }
             colorScheme="black"
             fontSize="15"

@@ -4,9 +4,11 @@ import { useState } from "react";
 
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
-const Map = ({ onMarkerPositionChange }) => {
+const Map = ({ onMarkerPositionChange, imageMarkerPosition }) => {
     const [marker, setMarker] = useState(null);
     const center = { lat: 36.0014, lng: -78.9382 };
+    console.log("Image marker: ")
+    console.log(imageMarkerPosition);
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GM_KEY,
@@ -51,6 +53,10 @@ const Map = ({ onMarkerPositionChange }) => {
                             lng: marker.lng,
                         }}></Marker>
                 )}
+                {imageMarkerPosition && (
+                    <Marker 
+                    position={imageMarkerPosition} />
+        )}
             </GoogleMap>
         </div>
     );
