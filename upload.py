@@ -1,8 +1,10 @@
 import sys
 import psycopg2
 import boto3
-from PIL import Image
-from PIL.ExifTags import TAGS
+from GPSPhoto import gpsphoto
+
+#from PIL import Image
+#from PIL.ExifTags import TAGS
 
 def get_env_data_as_dict(path: str) -> dict:
     with open(path, 'r') as f:
@@ -37,9 +39,10 @@ def upload_file(file_name, bucket, object_name=None):
     return url
 
 env = get_env_data_as_dict(".env.local")
-exif_data = {}
-GPSINFO_TAG = 34853
+#exif_data = {}
+#GPSINFO_TAG = 34853
 BUCKET_NAME = "dukeguessrbucket"
+ID_NUMBER = 6
 
 try:
     img_path = sys.argv[1]
@@ -50,10 +53,22 @@ link = upload_file(img_path, BUCKET_NAME)
 print(link)
 
 try:
+    data = gpsphoto.getGPSData(img_path)
+    #print(data['Latitude'], data['Longitude'])
+except (Exception) as error:
+    print("Error getting GPS data", error)
+
+'''
+try:
     image = Image.open(img_path)
     exif_raw = image.getexif()
-    gpsinfo = exif_raw.get_ifd(GPSINFO_TAG)
-    print(gpsinfo)
+    gpsraw = exif_raw.get_ifd(GPSINFO_TAG)
+    gpsinfo = {}
+    for key in exif_raw['GPSInfo'].keys():
+        decode = ExifTags.GPSTAGS.get(key,key)
+        gpsinfo[decode] = exif['GPSInfo'][key]
+    
+
 except (Exception) as error:
     print("Error extracting image data", error)
 
@@ -64,7 +79,7 @@ else:
     for key, val in exif_raw.items():
         if key in TAGS:
             exif_data[TAGS[key]] = val
-
+'''
 try:
     connection = psycopg2.connect(database=env["DB_NAME"],
                         host=env["DB_HOST"],
@@ -73,10 +88,9 @@ try:
                         port=env["PORT"])
     cursor = connection.cursor()
     print("Executing SQL Insert...")
-    #cursor.execute("")
-
-    for row in cursor:
-        print(row)
+    query = "INSERT INTO Location VALUES (%s, %s, %s, %s);"
+    cursor.execute(query , (ID_NUMBER, link, data['Latitude'], data['Longitude']))
+    connection.commit()
 except (Exception, psycopg2.Error) as error:
     print("Error while fetching data from PostgreSQL", error)
 finally:
