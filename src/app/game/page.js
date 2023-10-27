@@ -83,7 +83,7 @@ export default function Game() {
     </>
     }
 
-    if (imageIndex <= 4 && resultPage) {
+    if (imageIndex <= 3 && resultPage) {
       return <>
         <VStack spacing="10px">
           <Map 
@@ -92,8 +92,8 @@ export default function Game() {
           </Map>
           <Button
             onClick={() => {
-              setImageIndex(imageIndex + 1)
-              setResultPage(false)}
+              setResultPage(false)
+              setImageIndex(imageIndex + 1)}
             }
             colorScheme="black"
             fontSize="15"
