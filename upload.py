@@ -87,7 +87,7 @@ connection = psycopg2.connect(database=env["DB_NAME"],
                     password=env["DB_PASSWORD"],
                     port=env["PORT"],
                     sslmode='verify-full',
-                    sslrootcert='/Users/arvindh/Downloads/global-bundle.pem')
+                    sslrootcert=env["SSL_ROOT_CERT_PATH"])
 try:
 
     cursor = connection.cursor()
