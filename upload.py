@@ -43,10 +43,11 @@ env = get_env_data_as_dict(".env.local")
 BUCKET_NAME = "dukeguessrbucket"
 ID_NUMBER = 6
 
-try:
-    img_path = sys.argv[2]
-except (Exception):
-    print(f"One argument expected, {len(sys.argv) - 1} arguments given.\n Appropriate syntax: upload.py imagepath.jpg")
+if len(sys.argv) != 2:
+    raise Exception(f"One arguments expected, {len(sys.argv) - 1} arguments given.\n Appropriate syntax: python3 upload.py imagepath.jpg")
+
+img_path = sys.argv[1]
+print(img_path)
 
 link = upload_file(img_path, BUCKET_NAME)
 print(link)
