@@ -18,7 +18,7 @@ CREATE TABLE Records(
 );
 
 CREATE TABLE Location(
-    image_id INTEGER NOT NULL PRIMARY KEY,
+    image_id SERIAL NOT NULL PRIMARY KEY,
     image_file VARCHAR(256) NOT NULL UNIQUE,
     lat DECIMAL(8, 6) NOT NULL,
     long DECIMAL(9, 6) NOT NULL
