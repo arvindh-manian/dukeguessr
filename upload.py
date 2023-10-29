@@ -3,6 +3,7 @@ import psycopg2
 import boto3
 from GPSPhoto import gpsphoto
 from dotenv import dotenv_values
+import os
 
 #from PIL import Image
 #from PIL.ExifTags import TAGS
@@ -24,9 +25,10 @@ def upload_file(file_name, bucket, object_name=None):
     aws_secret_access_key = env["SECRET_KEY"],
     region_name = 'us-east-1'
     )
+    
+    # save the name of the file (excluding the path to it) as the object_name
 
-    if object_name is None:
-        object_name = "image" + file_name
+    object_name = os.path.basename(file_name)
 
     url = f"https://{bucket}.s3.us-east-1.amazonaws.com/{object_name}"
     try:
@@ -41,7 +43,6 @@ env = get_env_data_as_dict(".env.local")
 #exif_data = {}
 #GPSINFO_TAG = 34853
 BUCKET_NAME = "dukeguessrbucket"
-ID_NUMBER = 6
 
 if len(sys.argv) != 2:
     raise Exception(f"One arguments expected, {len(sys.argv) - 1} arguments given.\n Appropriate syntax: python3 upload.py imagepath.jpg")
@@ -80,16 +81,19 @@ else:
         if key in TAGS:
             exif_data[TAGS[key]] = val
 '''
+connection = psycopg2.connect(database=env["DB_NAME"],
+                    host=env["DB_HOST"],
+                    user=env["DB_USER"],
+                    password=env["DB_PASSWORD"],
+                    port=env["PORT"],
+                    sslmode='verify-full',
+                    sslrootcert='/Users/arvindh/Downloads/global-bundle.pem')
 try:
-    connection = psycopg2.connect(database=env["DB_NAME"],
-                        host=env["DB_HOST"],
-                        user=env["DB_USER"],
-                        password=env["DB_PASSWORD"],
-                        port=env["PORT"])
+
     cursor = connection.cursor()
     print("Executing SQL Insert...")
-    query = "INSERT INTO Location VALUES (%s, %s, %s, %s);"
-    cursor.execute(query , (ID_NUMBER, link, data['Latitude'], data['Longitude']))
+    query = "INSERT INTO Location VALUES (DEFAULT, %s, %s, %s);"
+    cursor.execute(query , (link, data['Latitude'], data['Longitude']))
     connection.commit()
 except (Exception, psycopg2.Error) as error:
     print("Error while fetching data from PostgreSQL", error)
