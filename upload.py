@@ -2,14 +2,13 @@ import sys
 import psycopg2
 import boto3
 from GPSPhoto import gpsphoto
+from dotenv import dotenv_values
 
 #from PIL import Image
 #from PIL.ExifTags import TAGS
 
 def get_env_data_as_dict(path: str) -> dict:
-    with open(path, 'r') as f:
-       return dict(tuple(line.replace('\n', '').split('=')) for line
-                in f.readlines() if not line.startswith('#'))
+    return dotenv_values(path)
 
 def upload_file(file_name, bucket, object_name=None):
     """Upload a file to an S3 bucket
@@ -43,10 +42,11 @@ env = get_env_data_as_dict(".env.local")
 #GPSINFO_TAG = 34853
 BUCKET_NAME = "dukeguessrbucket"
 
-try:
-    img_path = sys.argv[1]
-except (Exception):
-    print(f"One argument expected, {len(sys.argv) - 1} arguments given.\n Appropriate syntax: upload.py imagepath.jpg")
+if len(sys.argv) != 2:
+    raise Exception(f"One arguments expected, {len(sys.argv) - 1} arguments given.\n Appropriate syntax: python3 upload.py imagepath.jpg")
+
+img_path = sys.argv[1]
+print(img_path)
 
 link = upload_file(img_path, BUCKET_NAME)
 print(link)
