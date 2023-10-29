@@ -3,6 +3,7 @@ import psycopg2
 import boto3
 from GPSPhoto import gpsphoto
 from dotenv import dotenv_values
+import os
 
 #from PIL import Image
 #from PIL.ExifTags import TAGS
@@ -24,9 +25,10 @@ def upload_file(file_name, bucket, object_name=None):
     aws_secret_access_key = env["SECRET_KEY"],
     region_name = 'us-east-1'
     )
+    
+    # save the name of the file (excluding the path to it) as the object_name
 
-    if object_name is None:
-        object_name = "image" + file_name
+    object_name = os.path.basename(file_name)
 
     url = f"https://{bucket}.s3.us-east-1.amazonaws.com/{object_name}"
     try:
@@ -79,12 +81,15 @@ else:
         if key in TAGS:
             exif_data[TAGS[key]] = val
 '''
+connection = psycopg2.connect(database=env["DB_NAME"],
+                    host=env["DB_HOST"],
+                    user=env["DB_USER"],
+                    password=env["DB_PASSWORD"],
+                    port=env["PORT"],
+                    sslmode='verify-full',
+                    sslrootcert=env["SSL_ROOT_CERT_PATH"])
 try:
-    connection = psycopg2.connect(database=env["DB_NAME"],
-                        host=env["DB_HOST"],
-                        user=env["DB_USER"],
-                        password=env["DB_PASSWORD"],
-                        port=env["PORT"])
+
     cursor = connection.cursor()
     print("Executing SQL Insert...")
     query = "INSERT INTO Location VALUES (DEFAULT, %s, %s, %s);"
