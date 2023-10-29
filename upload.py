@@ -42,7 +42,6 @@ env = get_env_data_as_dict(".env.local")
 #exif_data = {}
 #GPSINFO_TAG = 34853
 BUCKET_NAME = "dukeguessrbucket"
-ID_NUMBER = 6
 
 try:
     img_path = sys.argv[1]
@@ -88,8 +87,8 @@ try:
                         port=env["PORT"])
     cursor = connection.cursor()
     print("Executing SQL Insert...")
-    query = "INSERT INTO Location VALUES (%s, %s, %s, %s);"
-    cursor.execute(query , (ID_NUMBER, link, data['Latitude'], data['Longitude']))
+    query = "INSERT INTO Location VALUES (DEFAULT, %s, %s, %s);"
+    cursor.execute(query , (link, data['Latitude'], data['Longitude']))
     connection.commit()
 except (Exception, psycopg2.Error) as error:
     print("Error while fetching data from PostgreSQL", error)
