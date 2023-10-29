@@ -46,10 +46,10 @@ if len(sys.argv) != 2:
     raise Exception(f"One arguments expected, {len(sys.argv) - 1} arguments given.\n Appropriate syntax: python3 upload.py imagepath.jpg")
 
 img_path = sys.argv[1]
-print(img_path)
+#print(img_path)
 
 link = upload_file(img_path, BUCKET_NAME)
-print(link)
+#print(link)
 
 try:
     data = gpsphoto.getGPSData(img_path)
