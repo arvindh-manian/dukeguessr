@@ -67,7 +67,6 @@ export default function Game() {
         <Button
           onClick={() => {
             setScore(score + (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long))
-            setImageIndex(imageIndex + 1)
             setResultPage(true)}
           }
           colorScheme="black"
@@ -93,8 +92,8 @@ export default function Game() {
           </Map>
           <Button
             onClick={() => {
-              setResultPage(false)}
-
+              setResultPage(false)
+              setImageIndex(imageIndex + 1)}
             }
             colorScheme="black"
             fontSize="15"
