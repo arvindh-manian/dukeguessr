@@ -66,7 +66,7 @@ export default function Game() {
             )}
         <Button
           onClick={() => {
-            setScore(score + (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long))
+            setScore(score + 1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))))
             setResultPage(true)}
           }
           colorScheme="black"
