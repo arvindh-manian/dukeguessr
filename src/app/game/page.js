@@ -22,7 +22,7 @@ export default function Game() {
     const [imageIndex, setImageIndex] = useState(0);
     const [resultPage, setResultPage] = useState(false);
     const [markerPosition, setMarkerPosition] = useState(null);
-    const { data: session } = useSession();
+    const [lastGuess, setLastGuess] = useState(0);
     const [newCenter, setNewCenter] = useState(null)
     const [guesses, setGuesses] = useState([]);
 
