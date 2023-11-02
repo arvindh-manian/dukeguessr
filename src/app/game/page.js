@@ -18,10 +18,15 @@ export default function Game() {
     const [imageIndex, setImageIndex] = useState(0);
     const [resultPage, setResultPage] = useState(false);
     const [markerPosition, setMarkerPosition] = useState(null);
+    const [newCenter, setNewCenter] = useState(null)
 
     const handleMarkerPositionChange = (position) => {
         setMarkerPosition(position);
     };
+
+    const handleNewCenter = (center) => {
+      setNewCenter(center);
+    }
     
     useEffect(() => {
         const fetchData = async () => {
@@ -57,7 +62,10 @@ export default function Game() {
     return <>
       <VStack spacing="10px">
         <img src={game[imageIndex].image_file}/>
-        <Map onMarkerPositionChange={handleMarkerPositionChange}></Map>
+        <Map 
+          onMarkerPositionChange={handleMarkerPositionChange}
+          onNewCenter={handleNewCenter}
+        ></Map>
         {markerPosition && (
                 <div>
                     <p>Latitude: {markerPosition.lat}</p>
