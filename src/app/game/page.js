@@ -90,6 +90,9 @@ export default function Game() {
             onMarkerPositionChange={handleMarkerPositionChange}
             imageMarkerPosition={{lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)}}>
           </Map>
+          <h1>
+            current score: {score}
+          </h1>
           <Button
             onClick={() => {
               setResultPage(false)
