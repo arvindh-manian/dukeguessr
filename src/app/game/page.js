@@ -18,10 +18,17 @@ export default function Game() {
     const [imageIndex, setImageIndex] = useState(0);
     const [resultPage, setResultPage] = useState(false);
     const [markerPosition, setMarkerPosition] = useState(null);
+    const [newCenter, setNewCenter] = useState(null)
 
     const handleMarkerPositionChange = (position) => {
-        setMarkerPosition(position);
+        if(!resultPage){
+          setMarkerPosition(position);
+        }
     };
+
+    const handleNewCenter = (center) => {
+      setNewCenter(center);
+    }
     
     useEffect(() => {
         const fetchData = async () => {
@@ -57,7 +64,11 @@ export default function Game() {
     return <>
       <VStack spacing="10px">
         <img src={game[imageIndex].image_file}/>
-        <Map onMarkerPositionChange={handleMarkerPositionChange}></Map>
+        <Map 
+          onMarkerPositionChange={handleMarkerPositionChange}
+          onNewCenter={handleNewCenter}
+          pauseMarker={false}
+        ></Map>
         {markerPosition && (
                 <div>
                     <p>Latitude: {markerPosition.lat}</p>
@@ -66,7 +77,7 @@ export default function Game() {
             )}
         <Button
           onClick={() => {
-            setScore(score + (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long))
+            setScore(score + 1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))))
             setResultPage(true)}
           }
           colorScheme="black"
@@ -88,12 +99,19 @@ export default function Game() {
         <VStack spacing="10px">
           <Map 
             onMarkerPositionChange={handleMarkerPositionChange}
-            imageMarkerPosition={{lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)}}>
+            onNewCenter={handleNewCenter}
+            imageMarkerPosition={{lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)}}
+            userMarkerPosition={{lat: markerPosition.lat, lng: markerPosition.lng}}
+            pauseMarker={true}
+            >
           </Map>
+          <h1>
+            current score: {score}
+          </h1>
           <Button
             onClick={() => {
-              setImageIndex(imageIndex + 1)
-              setResultPage(false)}
+              setResultPage(false)
+              setImageIndex(imageIndex + 1)}
             }
             colorScheme="black"
             fontSize="15"
