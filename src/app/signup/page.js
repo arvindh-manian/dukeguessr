@@ -28,12 +28,17 @@ import {
     Badge,
     Text,
     Heading,
+    InputGroup,
+    InputRightElement,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Footer from "../components/footer";
 import styles from "./page.module.css";
 
 export default function Start() {
+    const [show, setShow] = useState(false)
+    const handleShow = () => setShow(!show)
+
     const handleButtonClick = async () => {
         console.log("Trying to insert new account...");
         try {
@@ -89,12 +94,20 @@ export default function Start() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    <Input
-                        placeholder="Enter Password"
-                        size="md"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <InputGroup>
+                        <Input
+                            placeholder="Enter Password"
+                            size="md"
+                            type={show ? "text" : "password"}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <InputRightElement width='4.5rem'>
+                            <Button h='1.75rem' size='sm' onClick={handleShow}>
+                            {show ? 'Hide' : 'Show'}
+                            </Button>
+                        </InputRightElement>
+                    </InputGroup>
                     <Button
                         onClick={handleButtonClick}
                         colorScheme="blue"
