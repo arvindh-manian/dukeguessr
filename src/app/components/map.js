@@ -9,8 +9,6 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
     const [newCenter, setNewCenter] = useState(null);
     const center = { lat: 36.0014, lng: -78.9382 };
     var recenter = { lat: 36.0014, lng: -78.9382 };
-    console.log("Image marker: ")
-    console.log(imageMarkerPosition);
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GM_KEY,
@@ -24,21 +22,20 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
     };
 
     const placeMarker = (latLng, map) => {
-        setMarker({
-            lat: latLng.lat(),
-            lng: latLng.lng(),
-        });
-        console.log("moving to: " + latLng.lat(), latLng.lng());
-        const lat = latLng.lat();
-        const lng = latLng.lng();
-        console.log("Coordinates:", lat, lng);
-        console.log("New center: ", recenter);
-        onMarkerPositionChange({ lat, lng });
-        onNewCenter(map.getCenter().lat(), map.getCenter().lng())
-        setNewCenter({
-            lat: map.getCenter().lat(),
-            lng: map.getCenter().lng()
-        })
+        if(!pauseMarker){
+            setMarker({
+                lat: latLng.lat(),
+                lng: latLng.lng(),
+            });
+            const lat = latLng.lat();
+            const lng = latLng.lng();
+            onMarkerPositionChange({ lat, lng });
+            // onNewCenter(map.getCenter().lat(), map.getCenter().lng())
+            // setNewCenter({
+            //     lat: map.getCenter().lat(),
+            //     lng: map.getCenter().lng()
+            // })
+        }
     };
 
     if (!isLoaded) {
@@ -46,11 +43,11 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
     }
 
     return (
-        <div style={{ width: "50%", height: "50vh" }}>
+        <div style={{ width: "50%", height: "55vh" }}>
             <GoogleMap
                 center={newCenter || center}
                 zoom={15}
-                mapContainerStyle={{ width: "100%", height: "100%" }}
+                mapContainerStyle={{ width: "400px", height: "400px" }}
                 onLoad={handleMapLoad}>
                 {marker && !pauseMarker && (
                     <Marker

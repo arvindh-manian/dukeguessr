@@ -4,7 +4,10 @@ import {
   Button,
   Input,
   HStack,
-  VStack
+  VStack,
+  Image,
+  AspectRatio,
+  Box
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -21,7 +24,8 @@ export default function Game() {
     const [newCenter, setNewCenter] = useState(null)
 
     const handleMarkerPositionChange = (position) => {
-        if(!resultPage){
+      console.log("resultPage: ",resultPage);
+      if(!resultPage){
           setMarkerPosition(position);
         }
     };
@@ -62,19 +66,27 @@ export default function Game() {
     
     if (imageIndex <= 4 && !resultPage) {
     return <>
-      <VStack spacing="10px">
-        <img src={game[imageIndex].image_file}/>
-        <Map 
-          onMarkerPositionChange={handleMarkerPositionChange}
-          onNewCenter={handleNewCenter}
-          pauseMarker={false}
-        ></Map>
-        {markerPosition && (
-                <div>
-                    <p>Latitude: {markerPosition.lat}</p>
-                    <p>Longitude: {markerPosition.lng}</p>
-                </div>
-            )}
+      <VStack spacing="30px" style={{ paddingTop: "30px" }}>
+      <HStack spacing="10px">
+        <Box boxSize="sm">
+          <AspectRatio maxW='400px' ratio={9 / 9.4}>
+            <Image
+              src={game[imageIndex].image_file}
+            ></Image>
+          </AspectRatio>
+        </Box>
+          <Map 
+            onMarkerPositionChange={handleMarkerPositionChange}
+            onNewCenter={handleNewCenter}
+            pauseMarker={false}
+          ></Map>
+        </HStack>
+        {/*{markerPosition && (
+          <div>
+              <p>Latitude: {markerPosition.lat}</p>
+              <p>Longitude: {markerPosition.lng}</p>
+          </div>
+        )} */}
         <Button
           onClick={() => {
             setScore(score + 1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))))
@@ -88,7 +100,7 @@ export default function Game() {
           {"Submit Guess"}
         </Button>
       <h1>
-        {game[imageIndex].lat}, {game[imageIndex].long}, score: {score}
+        Current Score: {score}
       </h1>
       </VStack>
     </>
@@ -96,7 +108,16 @@ export default function Game() {
 
     if (imageIndex <= 4 && resultPage) {
       return <>
-        <VStack spacing="10px">
+        <p></p>
+        <VStack spacing="30px" style={{ paddingTop: "30px" }}>
+        <HStack spacing="10px">
+        <Box boxSize="sm">
+          <AspectRatio maxW='400px' ratio={9 / 9.4}>
+            <Image
+              src={game[imageIndex].image_file}
+            ></Image>
+          </AspectRatio>
+        </Box>
           <Map 
             onMarkerPositionChange={handleMarkerPositionChange}
             onNewCenter={handleNewCenter}
@@ -105,13 +126,12 @@ export default function Game() {
             pauseMarker={true}
             >
           </Map>
-          <h1>
-            current score: {score}
-          </h1>
+          </HStack>
           <Button
             onClick={() => {
               setResultPage(false)
-              setImageIndex(imageIndex + 1)}
+              setImageIndex(imageIndex + 1)
+              setMarkerPosition(null)}
             }
             colorScheme="black"
             fontSize="15"
@@ -120,6 +140,9 @@ export default function Game() {
             variant="outline">
             {"Next Location"}
           </Button>
+          <h1>
+            Current Score: {score}
+          </h1>
         </VStack>
       </>
     }
