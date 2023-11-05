@@ -13,7 +13,7 @@ export async function endGame(guesses, score, uuid) {
     // TODO: Change this to be a function of game_id instead of uuid and mark games as completed
         // This solves the case of a duplicated request causing issues
     const text = await query("SELECT * FROM Records WHERE username = $1", [uuid]);
-    var match = t.rows[0];
+    var match = text.rows[0];
     if (!match) {
         // Insert new user into database if not present
         const insert_query = `INSERT INTO Records (username) VALUES ($1)`;

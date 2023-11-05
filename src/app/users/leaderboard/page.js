@@ -93,7 +93,7 @@ export default function Leaderboard({ params }) {
                                             : "-"}
                                     </Td>
                                     <Td>
-                                        {user.avg_score ? user.avg_score : "-"}
+                                        {user.avg_score ? Math.round(user.avg_score) : "-"}
                                     </Td>
                                     <Td>
                                         {user.games_played

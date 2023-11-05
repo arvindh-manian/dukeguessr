@@ -7,7 +7,7 @@ import {
 import { useState, useEffect } from "react";
 import Map from "../components/map";
 import { useSession } from "next-auth/react";
-import { getDistance } from "geo-distance-js";
+import haversine from "haversine-distance";
 
 export default function Game() {
     const [game, setGame] = useState(null);
@@ -79,20 +79,14 @@ export default function Game() {
         <Button
           onClick={() => {
             // compute distance from right answer using haversine
-            const distance_from_right_answer = getDistance(
-              {
-                lat: markerPosition.lat,
-                lng: markerPosition.lng
-              },
-              {
-                lat: game[imageIndex].lat,
-                lng: game[imageIndex].long
-              }
-            )
+            const distance_from_right_answer = haversine(
+              { lat: game[imageIndex].lat, lng: game[imageIndex].long },
+              { lat: markerPosition.lat, lng: markerPosition.lng }
+            );
 
             const feet_per_meter = 3.28084;
-            new_guess = {
-              "distance": distance_from_right_answer / feet_per_meter
+            const new_guess = {
+              "distance": distance_from_right_answer * feet_per_meter
             }
             setGuesses([...guesses, new_guess])
             setScore(score + 1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))))
@@ -126,6 +120,7 @@ export default function Game() {
           <h1>
             current score: {score}
           </h1>
+          <p>Your last guess was {guesses[guesses.length - 1].distance} feet away</p>
           <Button
             onClick={() => {
               setResultPage(false)
@@ -149,7 +144,7 @@ export default function Game() {
       },
       body: JSON.stringify({
         "guesses": guesses,
-        "score": score,
+        "score": Math.round(score),
         "uuid": session.user.name
       }),
     })
