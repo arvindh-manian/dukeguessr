@@ -14,7 +14,12 @@ CREATE TABLE Records(
     username VARCHAR(256) NOT NULL PRIMARY KEY REFERENCES Account(username),
     high_score INTEGER,
     avg_score DECIMAL,
-    games_played INTEGER
+    games_played INTEGER,
+    within_10_feet BOOLEAN,
+    over_1000_miles BOOLEAN,
+    one_game_played BOOLEAN,
+    five_games_played BOOLEAN,
+    ten_games_played BOOLEAN
 );
 
 CREATE TABLE Location(

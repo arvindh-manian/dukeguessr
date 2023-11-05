@@ -35,6 +35,7 @@ import styles from "./page.module.css";
 
 export default function Start() {
     const handleButtonClick = async () => {
+        console.log("Trying to insert new account...");
         try {
             const res = await fetch("/api/users", {
                 method: "POST",
@@ -47,7 +48,7 @@ export default function Start() {
                     password,
                 }),
             });
-            console.log("trying this");
+            window.location.href='/api/auth/signin'
         } catch (error) {
             console.error("There was an error inserting the data!", error);
         }
@@ -109,15 +110,3 @@ export default function Start() {
         </Flex>
     );
 }
-
-/*import { Button, Box, Center, Image, Flex, Badge, Text } from "@chakra-ui/react";
-
-export default function Start() {
-  return (
-    <div>
-      <Center>Welcome to DukeGuessr!</Center>
-      <Button>Start Game</Button>
-
-    </div>
-  )
-}*/
