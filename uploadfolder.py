@@ -51,6 +51,8 @@ folder_path = sys.argv[1]
 dir = os.listdir(folder_path)
 print("Executing Inserts...")
 for image in dir:
+    if not image.lower().endswith(('.png', '.jpg', '.jpeg')):
+        continue
     img_path = f"{folder_path}/{image}"
     link = upload_file(img_path, BUCKET_NAME)
     #print(link)

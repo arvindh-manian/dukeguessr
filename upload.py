@@ -48,6 +48,8 @@ if len(sys.argv) != 2:
     raise Exception(f"One arguments expected, {len(sys.argv) - 1} arguments given.\n Appropriate syntax: python3 upload.py imagepath.jpg")
 
 img_path = sys.argv[1]
+if not img_path.lower().endswith(('.png', '.jpg', '.jpeg')):
+    exit()
 #print(img_path)
 
 link = upload_file(img_path, BUCKET_NAME)
@@ -88,8 +90,8 @@ connection = psycopg2.connect(database=env["DB_NAME"],
                     port=env["PORT"],
                     sslmode='verify-full',
                     sslrootcert=env["SSL_ROOT_CERT_PATH"])
-try:
 
+try:
     cursor = connection.cursor()
     print("Executing SQL Insert...")
     query = "INSERT INTO Location VALUES (DEFAULT, %s, %s, %s);"
