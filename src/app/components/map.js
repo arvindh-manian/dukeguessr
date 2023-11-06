@@ -35,7 +35,7 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
             //     lat: map.getCenter().lat(),
             //     lng: map.getCenter().lng()
             // })
-        }
+        3}
     };
 
     if (!isLoaded) {
@@ -47,7 +47,7 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
             <GoogleMap
                 center={newCenter || center}
                 zoom={15}
-                mapContainerStyle={{ width: "400px", height: "400px" }}
+                mapContainerStyle={{ width: "400px", height: "383px" }}
                 onLoad={handleMapLoad}>
                 {marker && !pauseMarker && (
                     <Marker

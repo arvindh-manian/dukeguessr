@@ -69,10 +69,10 @@ export default function Game() {
     
     if (imageIndex <= 4 && !resultPage) {
     return <>
-      <VStack spacing="30px" style={{ paddingTop: "30px" }}>
+      <VStack spacing="30px" paddingTop="30px">
       <HStack spacing="10px">
         <Box boxSize="sm">
-          <AspectRatio maxW='400px' ratio={9 / 9.4}>
+          <AspectRatio maxW='400px' ratio={9 / 9}>
             <Image
               src={game[imageIndex].image_file}
             ></Image>
