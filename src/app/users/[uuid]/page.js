@@ -74,7 +74,7 @@ export default function User({ params }) {
                         number={user.games_played || "0"}
                         label="Games played"></ComposedStat>
                     <ComposedStat
-                        number={user.avg_score}
+                        number={Math.round(user.avg_score)}
                         label="Average score"></ComposedStat>
                     <ComposedStat
                         number={user.high_score}
