@@ -27,10 +27,7 @@ export default function Game() {
     const [guesses, setGuesses] = useState([]);
 
     const handleMarkerPositionChange = (position) => {
-      console.log("resultPage: ",resultPage);
-      if(!resultPage){
-          setMarkerPosition(position);
-        }
+        setMarkerPosition(position);
     };
 
     const handleNewCenter = (center) => {
@@ -69,27 +66,18 @@ export default function Game() {
     
     if (imageIndex <= 4 && !resultPage) {
     return <>
-      <VStack spacing="30px" paddingTop="30px">
-      <HStack spacing="10px">
-        <Box boxSize="sm">
-          <AspectRatio maxW='400px' ratio={9 / 9}>
-            <Image
-              src={game[imageIndex].image_file}
-            ></Image>
-          </AspectRatio>
-        </Box>
-          <Map 
-            onMarkerPositionChange={handleMarkerPositionChange}
-            onNewCenter={handleNewCenter}
-            pauseMarker={false}
-          ></Map>
-        </HStack>
-        {/*{markerPosition && (
-          <div>
-              <p>Latitude: {markerPosition.lat}</p>
-              <p>Longitude: {markerPosition.lng}</p>
-          </div>
-        )} */}
+      <VStack spacing="10px">
+        <img src={game[imageIndex].image_file}/>
+        <Map 
+          onMarkerPositionChange={handleMarkerPositionChange}
+          onNewCenter={handleNewCenter}
+        ></Map>
+        {markerPosition && (
+                <div>
+                    <p>Latitude: {markerPosition.lat}</p>
+                    <p>Longitude: {markerPosition.lng}</p>
+                </div>
+            )}
         <Button
           onClick={() => {
             // compute distance from right answer using haversine
@@ -134,11 +122,7 @@ export default function Game() {
         </Box>
           <Map 
             onMarkerPositionChange={handleMarkerPositionChange}
-            onNewCenter={handleNewCenter}
-            imageMarkerPosition={{lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)}}
-            userMarkerPosition={{lat: markerPosition.lat, lng: markerPosition.lng}}
-            pauseMarker={true}
-            >
+            imageMarkerPosition={{lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)}}>
           </Map>
           </HStack>
           <h1>
