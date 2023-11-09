@@ -18,11 +18,12 @@ export default function Game() {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [tempScore, setTempScore] = useState(0);
     const [score, setScore] = useState(0);
     const [imageIndex, setImageIndex] = useState(0);
     const [resultPage, setResultPage] = useState(false);
     const [markerPosition, setMarkerPosition] = useState(null);
-    const [lastGuess, setLastGuess] = useState(0);
+    const { data: session } = useSession();
     const [newCenter, setNewCenter] = useState(null)
     const [guesses, setGuesses] = useState([]);
 
@@ -103,7 +104,9 @@ export default function Game() {
               "distance": distance_from_right_answer * feet_per_meter
             }
             setGuesses([...guesses, new_guess])
-            setScore(score + 1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))))
+            const new_temp_score = Math.min(1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))), 1500)
+            setTempScore(new_temp_score)
+            setScore(score + new_temp_score)
             setResultPage(true)}
           }
           colorScheme="black"
@@ -142,7 +145,7 @@ export default function Game() {
           </Map>
           </HStack>
           <h1>
-            current score: {score}
+          Score this guess: {tempScore}
           </h1>
           <p>Your last guess was {guesses[guesses.length - 1].distance} feet away</p>
           <Button
