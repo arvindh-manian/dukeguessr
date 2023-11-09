@@ -21,9 +21,7 @@ export default function Game() {
     const [newCenter, setNewCenter] = useState(null)
 
     const handleMarkerPositionChange = (position) => {
-        if(!resultPage){
-          setMarkerPosition(position);
-        }
+        setMarkerPosition(position);
     };
 
     const handleNewCenter = (center) => {
@@ -67,7 +65,6 @@ export default function Game() {
         <Map 
           onMarkerPositionChange={handleMarkerPositionChange}
           onNewCenter={handleNewCenter}
-          pauseMarker={false}
         ></Map>
         {markerPosition && (
                 <div>
@@ -99,11 +96,7 @@ export default function Game() {
         <VStack spacing="10px">
           <Map 
             onMarkerPositionChange={handleMarkerPositionChange}
-            onNewCenter={handleNewCenter}
-            imageMarkerPosition={{lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)}}
-            userMarkerPosition={{lat: markerPosition.lat, lng: markerPosition.lng}}
-            pauseMarker={true}
-            >
+            imageMarkerPosition={{lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)}}>
           </Map>
           <h1>
             current score: {score}

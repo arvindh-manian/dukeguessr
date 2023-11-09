@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
-const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMarkerPosition, pauseMarker }) => {
+const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition }) => {
     const [marker, setMarker] = useState(null);
     const [newCenter, setNewCenter] = useState(null);
     const center = { lat: 36.0014, lng: -78.9382 };
@@ -52,25 +52,17 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
                 zoom={15}
                 mapContainerStyle={{ width: "100%", height: "100%" }}
                 onLoad={handleMapLoad}>
-                {marker && !pauseMarker && (
+                {marker && (
                     <Marker
                         position={{
                             lat: marker.lat,
                             lng: marker.lng,
-                        }}
-                        icon={"http://maps.google.com/mapfiles/ms/icons/red-dot.png"}
-                        ></Marker>
+                        }}></Marker>
                 )}
                 {imageMarkerPosition && (
                     <Marker 
-                    position={imageMarkerPosition}
-                    icon={"http://maps.google.com/mapfiles/ms/icons/green-dot.png"} />
-                )}
-                {userMarkerPosition && (
-                    <Marker 
-                    position={userMarkerPosition}
-                    icon={"http://maps.google.com/mapfiles/ms/icons/red-dot.png"} />
-                )}
+                    position={imageMarkerPosition} />
+        )}
             </GoogleMap>
         </div>
     );
