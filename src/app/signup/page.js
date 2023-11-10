@@ -68,7 +68,7 @@ export default function Start() {
             direction="column"
             align="center"
             justify="flex-start"
-            minH="100vh"
+            minH="80vh"
             positive="relative">
             <Image
                 src="images/dg_logo.png"
@@ -119,7 +119,6 @@ export default function Start() {
                     </Button>
                 </HStack>
             </VStack>
-            <Footer></Footer>
         </Flex>
     );
 }
