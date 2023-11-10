@@ -76,7 +76,7 @@ export default function Navbar() {
                                     <Link
                                         href={`/users/${session.user.name}`}
                                         style={{ display: "inline-block" }}>
-                                        <Button variant="ghost">Profile</Button>
+                                        <Button variant="ghost">{ session.user.name }</Button>
                                     </Link>
                                 </>
                             ) : (
