@@ -4,11 +4,8 @@ import { useState } from "react";
 
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
-const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMarkerPosition, pauseMarker }) => {
+const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMarkerPosition, pauseMarker, center }) => {
     const [marker, setMarker] = useState(null);
-    const [newCenter, setNewCenter] = useState(null);
-    const center = { lat: 36.0014, lng: -78.9382 };
-    var recenter = { lat: 36.0014, lng: -78.9382 };
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GM_KEY,
@@ -30,22 +27,24 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
             const lat = latLng.lat();
             const lng = latLng.lng();
             onMarkerPositionChange({ lat, lng });
-            // onNewCenter(map.getCenter().lat(), map.getCenter().lng())
-            // setNewCenter({
-            //     lat: map.getCenter().lat(),
-            //     lng: map.getCenter().lng()
-            // })
-        3}
+            onNewCenter({
+                lat: map.getCenter().lat(),
+                lng: map.getCenter().lng()
+            })
+        5}
     };
 
     if (!isLoaded) {
         return <div>Loading...</div>;
     }
 
+    console.log("Center: ")
+    console.log(center);
+
     return (
-        <div style={{ width: "50%", height: "55vh" }}>
+        <div style={{ width: "50%", height: "55vh", paddingTop: "5px" }}>
             <GoogleMap
-                center={newCenter || center}
+                center={center}
                 zoom={15}
                 mapContainerStyle={{ width: "400px", height: "383px" }}
                 onLoad={handleMapLoad}>

@@ -24,8 +24,8 @@ export default function Game() {
     const [resultPage, setResultPage] = useState(false);
     const [markerPosition, setMarkerPosition] = useState(null);
     const { data: session } = useSession();
-    const [newCenter, setNewCenter] = useState(null)
     const [guesses, setGuesses] = useState([]);
+    const [center, setCenter] = useState({ lat: 36.0014, lng: -78.9382 });
 
     const handleMarkerPositionChange = (position) => {
       console.log("resultPage: ",resultPage);
@@ -34,9 +34,7 @@ export default function Game() {
         }
     };
 
-    const handleNewCenter = (center) => {
-      setNewCenter(center);
-    }
+    const handleNewCenter = (newCenter) => {setCenter(newCenter)};
     
     useEffect(() => {
         const fetchData = async () => {
@@ -82,7 +80,9 @@ export default function Game() {
           <Map 
             onMarkerPositionChange={handleMarkerPositionChange}
             onNewCenter={handleNewCenter}
+            center={center}
             pauseMarker={false}
+
           ></Map>
         </HStack>
         {/*{markerPosition && (
@@ -107,6 +107,7 @@ export default function Game() {
             const new_temp_score = Math.min(1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))), 1500)
             setTempScore(new_temp_score)
             setScore(score + new_temp_score)
+            setCenter({lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)})
             setResultPage(true)}
           }
           colorScheme="black"
@@ -129,7 +130,7 @@ export default function Game() {
         <VStack spacing="30px" style={{ paddingTop: "30px" }}>
         <HStack spacing="10px">
         <Box boxSize="sm">
-          <AspectRatio maxW='400px' ratio={9 / 9.4}>
+          <AspectRatio maxW='400px' ratio={9 / 9}>
             <Image
               src={game[imageIndex].image_file}
             ></Image>
@@ -138,6 +139,7 @@ export default function Game() {
           <Map 
             onMarkerPositionChange={handleMarkerPositionChange}
             onNewCenter={handleNewCenter}
+            center={center}
             imageMarkerPosition={{lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)}}
             userMarkerPosition={{lat: markerPosition.lat, lng: markerPosition.lng}}
             pauseMarker={true}
@@ -152,7 +154,8 @@ export default function Game() {
             onClick={() => {
               setResultPage(false)
               setImageIndex(imageIndex + 1)
-              setMarkerPosition(null)}
+              setMarkerPosition(null)
+              setCenter({ lat: 36.0014, lng: -78.9382 })}
             }
             colorScheme="black"
             fontSize="15"
