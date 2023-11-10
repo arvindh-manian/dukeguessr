@@ -2,7 +2,12 @@
 
 import {
   Button,
-  VStack
+  Input,
+  HStack,
+  VStack,
+  Image,
+  AspectRatio,
+  Box
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Map from "../components/map";
@@ -13,6 +18,7 @@ export default function Game() {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [tempScore, setTempScore] = useState(0);
     const [score, setScore] = useState(0);
     const [imageIndex, setImageIndex] = useState(0);
     const [resultPage, setResultPage] = useState(false);
@@ -22,7 +28,8 @@ export default function Game() {
     const [guesses, setGuesses] = useState([]);
 
     const handleMarkerPositionChange = (position) => {
-        if(!resultPage){
+      console.log("resultPage: ",resultPage);
+      if(!resultPage){
           setMarkerPosition(position);
         }
     };
@@ -63,19 +70,27 @@ export default function Game() {
     
     if (imageIndex <= 4 && !resultPage) {
     return <>
-      <VStack spacing="10px">
-        <img src={game[imageIndex].image_file}/>
-        <Map 
-          onMarkerPositionChange={handleMarkerPositionChange}
-          onNewCenter={handleNewCenter}
-          pauseMarker={false}
-        ></Map>
-        {markerPosition && (
-                <div>
-                    <p>Latitude: {markerPosition.lat}</p>
-                    <p>Longitude: {markerPosition.lng}</p>
-                </div>
-            )}
+      <VStack spacing="30px" paddingTop="30px">
+      <HStack spacing="10px">
+        <Box boxSize="sm">
+          <AspectRatio maxW='400px' ratio={9 / 9}>
+            <Image
+              src={game[imageIndex].image_file}
+            ></Image>
+          </AspectRatio>
+        </Box>
+          <Map 
+            onMarkerPositionChange={handleMarkerPositionChange}
+            onNewCenter={handleNewCenter}
+            pauseMarker={false}
+          ></Map>
+        </HStack>
+        {/*{markerPosition && (
+          <div>
+              <p>Latitude: {markerPosition.lat}</p>
+              <p>Longitude: {markerPosition.lng}</p>
+          </div>
+        )} */}
         <Button
           onClick={() => {
             // compute distance from right answer using haversine
@@ -89,7 +104,9 @@ export default function Game() {
               "distance": distance_from_right_answer * feet_per_meter
             }
             setGuesses([...guesses, new_guess])
-            setScore(score + 1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))))
+            const new_temp_score = Math.min(1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))), 1500)
+            setTempScore(new_temp_score)
+            setScore(score + new_temp_score)
             setResultPage(true)}
           }
           colorScheme="black"
@@ -100,7 +117,7 @@ export default function Game() {
           {"Submit Guess"}
         </Button>
       <h1>
-        {game[imageIndex].lat}, {game[imageIndex].long}, score: {score}
+        Current Score: {score}
       </h1>
       </VStack>
     </>
@@ -108,7 +125,16 @@ export default function Game() {
 
     if (imageIndex <= 4 && resultPage) {
       return <>
-        <VStack spacing="10px">
+        <p></p>
+        <VStack spacing="30px" style={{ paddingTop: "30px" }}>
+        <HStack spacing="10px">
+        <Box boxSize="sm">
+          <AspectRatio maxW='400px' ratio={9 / 9.4}>
+            <Image
+              src={game[imageIndex].image_file}
+            ></Image>
+          </AspectRatio>
+        </Box>
           <Map 
             onMarkerPositionChange={handleMarkerPositionChange}
             onNewCenter={handleNewCenter}
@@ -117,14 +143,16 @@ export default function Game() {
             pauseMarker={true}
             >
           </Map>
+          </HStack>
           <h1>
-            current score: {score}
+          Score this guess: {tempScore}
           </h1>
           <p>Your last guess was {guesses[guesses.length - 1].distance} feet away</p>
           <Button
             onClick={() => {
               setResultPage(false)
-              setImageIndex(imageIndex + 1)}
+              setImageIndex(imageIndex + 1)
+              setMarkerPosition(null)}
             }
             colorScheme="black"
             fontSize="15"
@@ -133,6 +161,9 @@ export default function Game() {
             variant="outline">
             {"Next Location"}
           </Button>
+          <h1>
+            Current Score: {score}
+          </h1>
         </VStack>
       </>
     }
