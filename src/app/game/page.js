@@ -7,7 +7,17 @@ import {
   VStack,
   Image,
   AspectRatio,
-  Box
+  Box,
+  useDisclosure,
+  ModalOverlay,
+  ListItem,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  List,
+  ModalFooter
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Map from "../components/map";
@@ -26,6 +36,8 @@ export default function Game() {
     const { data: session } = useSession();
     const [guesses, setGuesses] = useState([]);
     const [center, setCenter] = useState({ lat: 36.0014, lng: -78.9382 });
+    const [achievements, setAchievements] = useState(null);
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const handleMarkerPositionChange = (position) => {
       console.log("resultPage: ",resultPage);
@@ -171,17 +183,51 @@ export default function Game() {
       </>
     }
 
-    fetch(`/api/games/end`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "guesses": guesses,
-        "score": Math.round(score),
-        "uuid": session.user.name
-      }),
-    })
+    if (achievements === null) {
+      fetch(`/api/games/end`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "guesses": guesses,
+          "score": Math.round(score),
+          "uuid": session.user.name
+        }),
+      }).then(
+        response => response.json()
+      ).then(
+        data => {
+          setAchievements(data)
+          onOpen();
+        }
+      )
+      return <h1>good job you did 5 guesses your score was {score}</h1>
+    }
 
-    return <><h1>good job you did 5 guesses your score was {score}</h1></>
+
+
+    return <>
+    {achievements.length > 0 &&<Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay/>
+      <ModalContent>
+        <ModalHeader>Achievements</ModalHeader>
+        <ModalCloseButton/>
+        <ModalBody>
+          <List spacing={3}>
+            {achievements.map((achievement) => (
+              <ListItem key={achievement}>
+                <p> You did {achievement}</p>
+              </ListItem>
+            ))}
+          </List>
+        </ModalBody>
+
+        <ModalFooter>
+          <Button onClick={onClose}>Close</Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>}
+    <h1>good job you did 5 guesses your score was {score}</h1>
+    </>
 }
