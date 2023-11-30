@@ -38,6 +38,7 @@ export default function Game() {
     const [center, setCenter] = useState({ lat: 36.0014, lng: -78.9382 });
     const [achievements, setAchievements] = useState(null);
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [fetchingAchievements, setFetchingAchievements] = useState(false);
 
     const handleMarkerPositionChange = (position) => {
       console.log("resultPage: ",resultPage);
@@ -183,7 +184,8 @@ export default function Game() {
       </>
     }
 
-    if (achievements === null) {
+    if (achievements === null && !fetchingAchievements) {
+      setFetchingAchievements(true);
       fetch(`/api/games/end`, {
         method: "POST",
         headers: {
@@ -208,7 +210,7 @@ export default function Game() {
 
 
     return <>
-    {achievements.length > 0 &&<Modal isOpen={isOpen} onClose={onClose}>
+    {achievements && achievements.length > 0 &&<Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay/>
       <ModalContent>
         <ModalHeader>Achievements</ModalHeader>

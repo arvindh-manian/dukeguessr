@@ -29,8 +29,6 @@ export async function endGame(guesses, score, uuid) {
 
     await query("BEGIN");
 
-
-    console.log('ending game for ' + uuid);
     const text = await query("SELECT * FROM Records WHERE username = $1", [uuid]);
     var match = text.rows[0];
     if (!match) {
