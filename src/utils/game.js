@@ -18,8 +18,8 @@ export async function createGame(uuid, mode, num_images) {
     ORDER BY RANDOM () 
     LIMIT $5
     `;
-    let lats = [-999, 999];
-    let longs = [-999, 999];
+    let lats = {lower: -999, upper: 999};
+    let longs = {lower: -999, upper: 999};
     let limit = 9999;
     if (num_images != null && num_images != 0){
         limit = num_images;
@@ -34,6 +34,9 @@ export async function createGame(uuid, mode, num_images) {
     } else if (mode == "gardens") {
         lats = gardensLats;
         longs = gardensLongs;
+    } else {
+        lats = dukeLats;
+        longs = dukeLongs;
     }
     
     const temp_id = await query("INSERT INTO game VALUES(DEFAULT, NULL, 'test') RETURNING game_id");
