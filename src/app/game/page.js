@@ -2,27 +2,17 @@
 
 import {
   Button,
-  Input,
   HStack,
   VStack,
   Image,
   AspectRatio,
   Box,
-  useDisclosure,
-  ModalOverlay,
-  ListItem,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  List,
-  ModalFooter
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Map from "../components/map";
 import { useSession } from "next-auth/react";
 import haversine from "haversine-distance";
+import { ResultDisplay } from "../components/results";
 
 export default function Game() {
     const [game, setGame] = useState(null);
@@ -37,8 +27,8 @@ export default function Game() {
     const [guesses, setGuesses] = useState([]);
     const [center, setCenter] = useState({ lat: 36.0014, lng: -78.9382 });
     const [achievements, setAchievements] = useState(null);
-    const { isOpen, onOpen, onClose } = useDisclosure()
     const [fetchingAchievements, setFetchingAchievements] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleMarkerPositionChange = (position) => {
       console.log("resultPage: ",resultPage);
@@ -201,7 +191,7 @@ export default function Game() {
       ).then(
         data => {
           setAchievements(data)
-          onOpen();
+          setIsOpen(data && data.length > 0)
         }
       )
       return <h1>good job you did 5 guesses your score was {score}</h1>
@@ -209,27 +199,5 @@ export default function Game() {
 
 
 
-    return <>
-    {achievements && achievements.length > 0 &&<Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay/>
-      <ModalContent>
-        <ModalHeader>Achievements</ModalHeader>
-        <ModalCloseButton/>
-        <ModalBody>
-          <List spacing={3}>
-            {achievements.map((achievement) => (
-              <ListItem key={achievement}>
-                <p> You did {achievement}</p>
-              </ListItem>
-            ))}
-          </List>
-        </ModalBody>
-
-        <ModalFooter>
-          <Button onClick={onClose}>Close</Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>}
-    <h1>good job you did 5 guesses your score was {score}</h1>
-    </>
+    return <ResultDisplay achievements={achievements} score={Math.round(score) } isOpen={isOpen} setIsOpen={setIsOpen} />
 }
