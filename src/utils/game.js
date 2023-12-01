@@ -1,9 +1,45 @@
 import { query } from "./db";
 
-export async function createGame(uuid) {
+export async function createGame(uuid, mode, num_images) {
+    const westLats = {lower: 35.99430815017746, upper: 36.00667182204735}
+    const westLongs = {lower: -78.9459561590145, upper: -78.93605360751229}
+
+    const eastLats = {lower: 36.00263641201658, upper: 36.00975115010499}
+    const eastLongs = {lower: -78.92078837645336, upper: -78.91208046540619}
+
+    const gardensLats = {lower: 36.000410851950775, upper: 36.00522423590298}
+    const gardensLongs = {lower: -78.9359986394505, upper: -78.92988761485728}
+
+    const dukeLats = {lower: 35.98786056801792, upper: 36.01730613973231}
+    const dukeLongs = {lower: -78.96292089018712, upper: -78.90470648047639}
+    let q = `
+    SELECT * FROM Location 
+    WHERE ((lat > $1) AND (lat < $2) AND (long > $3) AND (long < $4)) 
+    ORDER BY RANDOM () 
+    LIMIT $5
+    `;
+    let lats = [-999, 999];
+    let longs = [-999, 999];
+    let limit = 9999;
+    if (num_images != null && num_images != 0){
+        limit = num_images;
+    }
+
+    if (mode == "west") {
+        lats = westLats;
+        longs = westLongs;
+    } else if (mode == "east") {
+        lats = eastLats;
+        longs = eastLongs;
+    } else if (mode == "gardens") {
+        lats = gardensLats;
+        longs = gardensLongs;
+    }
+    
     const temp_id = await query("INSERT INTO game VALUES(DEFAULT, NULL, 'test') RETURNING game_id");
-    const text = await query("SELECT * FROM location ORDER BY RANDOM () LIMIT 5");
-    for (let i = 0; i < 5; i++) {
+    const text = await query(q, [lats.lower, lats.upper, longs.lower, longs.upper, limit]);
+    let num_returned = text.rows.length;
+    for (let i = 0; i < num_returned; i++) {
         await query("INSERT INTO element VALUES ($1, $2)", [temp_id.rows[0].game_id, text.rows[i].image_id]);
     }
     return text.rows;
