@@ -10,6 +10,8 @@ import {
 } from "@chakra-ui/react";
 
 import { useState } from "react";
+import { RenderedAchievements } from "./achievements";
+
 
 const AchievementDisplay = ({achievements, isOpen, onClose}) => {
   console.log("Modal achievements", achievements);
@@ -20,13 +22,7 @@ const AchievementDisplay = ({achievements, isOpen, onClose}) => {
         <ModalHeader>Achievements</ModalHeader>
         <ModalCloseButton/>
         <ModalBody>
-          <List spacing={3}>
-            {achievements.map((achievement) => (
-              <ListItem key={achievement}>
-                <p> You did {achievement}</p>
-              </ListItem>
-            ))}
-          </List>
+            <RenderedAchievements achievements={achievements}/>
         </ModalBody>
     </ModalContent>
     </Modal>}
@@ -35,7 +31,7 @@ const AchievementDisplay = ({achievements, isOpen, onClose}) => {
 
 export const ResultDisplay = ({achievements, score, isOpen, setIsOpen}) => {
     console.log("Result display achievements", achievements);
-    console.log("Is oepn result", isOpen);
+    console.log("Is open result", isOpen);
     console.log(achievements && achievements.length > 0);
     return <>
     <AchievementDisplay achievements={achievements} isOpen={isOpen} onClose={() => setIsOpen(false)}/>

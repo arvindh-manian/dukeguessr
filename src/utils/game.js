@@ -63,5 +63,6 @@ export async function endGame(guesses, score, uuid) {
     await query(query_text, [new_high_score, new_avg_score, new_games_played, new_within_10_feet, new_over_1000_miles, new_one_game_played, new_five_games_played, new_ten_games_played, uuid]);
 
     await query("COMMIT");
+    // get the achievements that changed and return them
     return Object.keys(achievementChanges).filter((key) => achievementChanges[key]);
 }
