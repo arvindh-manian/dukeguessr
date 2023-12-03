@@ -57,7 +57,7 @@ export default function GameMode(){
                 mt={10}
             />
             <VStack spacing="50px">
-                <Heading as="h1" size="2xl" mt={100}>
+                <Heading as="h2" size="2xl" mt={100}>
                     Choose Your Mode!
                 </Heading>
                 <HStack>
@@ -102,6 +102,9 @@ export default function GameMode(){
                         </Button>
                     </Link>
                 </HStack>
+                <Heading as="h2" size="xl">
+                    Number of Images:
+                </Heading>
                 <Slider 
                     aria-label='slider-ex-5' 
                     onChangeEnd={(val) => handleChangeSlider(val)}
