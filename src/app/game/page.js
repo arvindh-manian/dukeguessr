@@ -82,7 +82,7 @@ export default function Game() {
       return <p>Loading...</p>;
     }
     
-    if (imageIndex < num_images && !resultPage) {
+    if (imageIndex < game.length && !resultPage) {
     return <>
       <VStack spacing="30px" paddingTop="30px">
       <HStack spacing="10px">
@@ -140,7 +140,7 @@ export default function Game() {
     </>
     }
 
-    if (imageIndex < num_images && resultPage) {
+    if (imageIndex < game.length && resultPage) {
       return <>
         <p></p>
         <VStack spacing="30px" style={{ paddingTop: "30px" }}>
