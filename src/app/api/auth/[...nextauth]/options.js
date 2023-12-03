@@ -10,7 +10,7 @@ export const options = {
                 name: {
                     label: "Username:",
                     type: "text",
-                    placeholder: "bolgar_the_destroyer",
+                    placeholder: "Alex_Chao_Is_Cool",
                 },
                 password: {
                     label: "Password:",

@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import Map from "../components/map";
 import { useSession } from "next-auth/react";
 import haversine from "haversine-distance";
+import { useSearchParams } from 'next/navigation';
 import { ResultDisplay } from "../components/results";
 
 export default function Game() {
@@ -25,7 +26,18 @@ export default function Game() {
     const [markerPosition, setMarkerPosition] = useState(null);
     const { data: session } = useSession();
     const [guesses, setGuesses] = useState([]);
-    const [center, setCenter] = useState({ lat: 36.0014, lng: -78.9382 });
+
+    const centers = {all: { lat: 36.0014, lng: -78.9382 }, 
+                    west: { lat: 36.0014, lng: -78.9382 }, 
+                    east: { lat: 36.0070, lng: -78.9156 },
+                    gardens: { lat: 36.0022, lng: -78.9331 }
+                  }
+
+    const searchParams = useSearchParams();
+    const mode = searchParams.get('mode');
+    const num_images = searchParams.get('num_images');
+
+    const [center, setCenter] = useState(centers[mode]);
     const [achievements, setAchievements] = useState(null);
     const [fetchingAchievements, setFetchingAchievements] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +56,7 @@ export default function Game() {
           if (!error && loading) {
             let resp;
             try {
-              resp = await fetch(`/api/games/start`, {method: "POST"})
+              resp = await fetch(`/api/games/start`, {method: "POST", body: JSON.stringify({mode: mode, num_images: num_images})})
               if (!resp.ok) {
                 setError(true);
                 return;
@@ -69,7 +81,7 @@ export default function Game() {
       return <p>Loading...</p>;
     }
     
-    if (imageIndex <= 4 && !resultPage) {
+    if (imageIndex < num_images && !resultPage) {
     return <>
       <VStack spacing="30px" paddingTop="30px">
       <HStack spacing="10px">
@@ -127,7 +139,7 @@ export default function Game() {
     </>
     }
 
-    if (imageIndex <= 4 && resultPage) {
+    if (imageIndex < num_images && resultPage) {
       return <>
         <p></p>
         <VStack spacing="30px" style={{ paddingTop: "30px" }}>
@@ -158,7 +170,7 @@ export default function Game() {
               setResultPage(false)
               setImageIndex(imageIndex + 1)
               setMarkerPosition(null)
-              setCenter({ lat: 36.0014, lng: -78.9382 })}
+              setCenter(centers[mode])}
             }
             colorScheme="black"
             fontSize="15"
