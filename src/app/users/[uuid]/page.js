@@ -15,7 +15,8 @@ import {
     IconButton,
     Spacer,
     Text,
-    Center
+    Center,
+    Box
 } from "@chakra-ui/react";
 
 const ComposedStat = ({ number, label }) => {
@@ -103,31 +104,31 @@ export default function User({ params }) {
         </VStack>
             {user.username === session.user.name ? (
                 <VStack>
-                <><Text as='b' >Customize Your Marker!</Text>
+                <><Text as='b' >Choose Your Marker!</Text>
                 <><HStack spacing={20} padding='20px'>
                 <IconButton
                     icon={<Image 
-                        src="/images/goofytooth.png"
-                        width={55}
-                        height={85} />}
+                        src="/images/devil.png"
+                        width={65}
+                        height={95} />}
                     border="1px"
-                    background={selectedMarker === "goofytooth" ? "#C3E3FC" : "transparent"}
+                    background={selectedMarker === "devil" ? "#C3E3FC" : "transparent"}
                     _hover={{ background: "#C3E3FC" }}
                     width={100}
                     height={100}
-                    onClick={() => handleMarkerSelection("goofytooth")}
+                    onClick={() => handleMarkerSelection("devil")}
                 />
                 <IconButton
                     icon={<Image 
-                        src="/images/angry.png"
-                        width={55}
-                        height={79} />}
+                        src="/images/happy.png"
+                        width={65}
+                        height={85} />}
                     border="1px"
-                    background={selectedMarker === "angry" ? "#C3E3FC" : "transparent"}
+                    background={selectedMarker === "happy" ? "#C3E3FC" : "transparent"}
                     _hover={{ background: "#C3E3FC" }}
                     width={100}
                     height={100}
-                    onClick={() => handleMarkerSelection("angry")}
+                    onClick={() => handleMarkerSelection("happy")}
                 />
                 <IconButton
                     icon={<Image 
@@ -143,7 +144,7 @@ export default function User({ params }) {
                 />
                 <IconButton
                     icon={<Image 
-                        src="/images/happy.png"
+                        src="/images/sleep.png"
                         width={55}
                         height={79} />}
                     border="1px"

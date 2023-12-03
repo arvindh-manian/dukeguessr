@@ -56,7 +56,7 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
                         }}
                         icon={{
                             url: `/images/${userMarkerCookie}.png`,
-                            scaledSize: new window.google.maps.Size(32, 40),
+                            scaledSize: new window.google.maps.Size(48, 50),
                         }}
                         ></Marker>
                 )}
