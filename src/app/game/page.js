@@ -36,6 +36,7 @@ export default function Game() {
     const searchParams = useSearchParams();
     const mode = searchParams.get('mode');
     const num_images = searchParams.get('num_images');
+    const num_images_ratio = 5 / num_images;
 
     const [center, setCenter] = useState(centers[mode]);
     const [achievements, setAchievements] = useState(null);
@@ -119,7 +120,7 @@ export default function Game() {
               "distance": distance_from_right_answer * feet_per_meter
             }
             setGuesses([...guesses, new_guess])
-            const new_temp_score = Math.min(1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))), 1500)
+            const new_temp_score = Math.min((1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long)))) * num_images_ratio, 1500 * num_images_ratio)
             setTempScore(new_temp_score)
             setScore(score + new_temp_score)
             setCenter({lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)})
