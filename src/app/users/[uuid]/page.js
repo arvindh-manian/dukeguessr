@@ -16,6 +16,8 @@ import {
     Spacer,
     Text,
     Center,
+    Divider,
+    AbsoluteCenter,
     Box
 } from "@chakra-ui/react";
 import { RenderedAchievements } from "@/app/components/achievements";
@@ -81,8 +83,8 @@ export default function User({ params }) {
 
     console.log(session.username)
     return (
-        <>
-        <VStack spacing={100} align='stretch'>
+    <>
+        <VStack spacing={10} align='stretch'>
             <VStack>
                 <Heading>{user.username}</Heading>
                 <h1>
@@ -100,66 +102,80 @@ export default function User({ params }) {
                         number={user.high_score}
                         label="High score"></ComposedStat>
                 </HStack>
-                <br></br>
-                <RenderedAchievements achievements={["one_game_played", "five_games_played", "ten_games_played", "within_10_feet", "over_1000_miles"].filter((achievement) => user[achievement])} />
             </VStack>
             <><h1></h1></>
         </VStack>
-            {user.username === session.user.name ? (
-                <VStack>
-                <><Text as='b' >Choose Your Marker!</Text>
-                <><HStack spacing={20} padding='20px'>
-                <IconButton
-                    icon={<Image 
-                        src="/images/devil.png"
-                        width={65}
-                        height={95} />}
-                    border="1px"
-                    background={selectedMarker === "devil" ? "#C3E3FC" : "transparent"}
-                    _hover={{ background: "#C3E3FC" }}
-                    width={100}
-                    height={100}
-                    onClick={() => handleMarkerSelection("devil")}
-                />
-                <IconButton
-                    icon={<Image 
-                        src="/images/happy.png"
-                        width={65}
-                        height={85} />}
-                    border="1px"
-                    background={selectedMarker === "happy" ? "#C3E3FC" : "transparent"}
-                    _hover={{ background: "#C3E3FC" }}
-                    width={100}
-                    height={100}
-                    onClick={() => handleMarkerSelection("happy")}
-                />
-                <IconButton
-                    icon={<Image 
-                        src="/images/dead.png"
-                        width={55}
-                        height={79} />}
-                    border="1px"
-                    background={selectedMarker === "dead" ? "#C3E3FC" : "transparent"}
-                    _hover={{ background: "#C3E3FC" }}
-                    width={100}
-                    height={100}
-                    onClick={() => handleMarkerSelection("dead")}
-                />
-                <IconButton
-                    icon={<Image 
-                        src="/images/sleep.png"
-                        width={55}
-                        height={79} />}
-                    border="1px"
-                    width={100}
-                    height={100}
-                    _hover={{ background: "#transparent" }}
-                    onClick={null}
-                    style={{ opacity: 0.35 }}
-                />
-                </HStack></></>
-                </VStack>
-            ): null}
+        
+        {user.username === session.user.name ? (
+        <>
+        <Box position='relative' padding='10'>
+            <Divider borderColor="darkgray"/>
+            <AbsoluteCenter bg='white' px='4' as='b'>
+                Choose Your Marker
+            </AbsoluteCenter>
+        </Box>
+        <Center>
+        <HStack spacing={20} padding='20px'>
+        <IconButton
+            icon={<Image 
+            src="/images/devil.png"
+            width={65}
+            height={95} />}
+            border="1px"
+            background={selectedMarker === "devil" ? "#C3E3FC" : "transparent"}
+            _hover={{ background: "#C3E3FC" }}
+            width={100}
+            height={100}
+            onClick={() => handleMarkerSelection("devil")}
+        />
+        <IconButton
+            icon={<Image 
+            src="/images/happy.png"
+            width={65}
+            height={85} />}
+            border="1px"
+            background={selectedMarker === "happy" ? "#C3E3FC" : "transparent"}
+            _hover={{ background: "#C3E3FC" }}
+            width={100}
+            height={100}
+            onClick={() => handleMarkerSelection("happy")}
+        />
+        <IconButton
+            icon={<Image 
+            src="/images/dead.png"
+            width={55}
+            height={79} />}
+            border="1px"
+            background={selectedMarker === "dead" ? "#C3E3FC" : "transparent"}
+            _hover={{ background: "#C3E3FC" }}
+            width={100}
+            height={100}
+            onClick={() => handleMarkerSelection("dead")}
+        />
+        <IconButton
+            icon={<Image 
+            src="/images/sleep.png"
+            width={55}
+            height={79} />}
+            border="1px"
+            background={selectedMarker === "sleep" ? "#C3E3FC" : "transparent"}
+            _hover={{ background: "#C3E3FC" }}
+            width={100}
+            height={100}
+            onClick={() => handleMarkerSelection("sleep")}
+        />
+        </HStack></Center></>) : null}
+        
+        <Box position='relative' padding='10'>
+        <Divider borderColor="darkgray"/>
+        <AbsoluteCenter bg='white' px='4' as='b'>
+            Achievements
+        </AbsoluteCenter>
+        </Box>
+        <Center>
+        <RenderedAchievements achievements={["one_game_played", "five_games_played", "ten_games_played", "within_10_feet", "over_1000_miles"].filter((achievement) => user[achievement])} />
+        </Center>
+        <br></br>
         </>
     );
 }

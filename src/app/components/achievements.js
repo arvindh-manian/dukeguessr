@@ -1,14 +1,14 @@
 import { Card, CardBody, Image, Stack, Heading, Text, HStack, Center } from "@chakra-ui/react"
 
 const RenderedAchievement = ({name, description, image}) => {
-    return <Card maxW='sm' minW='sm' maxH='sm' minH='sm'>
+    return <Card maxW='xs' minW='xs' maxH='xs' minH='xs'>
         <CardBody>
             <Center>
             <Image src={image}></Image>
             </Center>
             <Stack mt='6' spacing='3'>
-                <Heading size='md'>{name}</Heading>
-                <Text>
+                <Heading size='sm'>{name}</Heading>
+                <Text fontSize='14px'>
                     {description}
                 </Text>
             </Stack>
@@ -32,7 +32,7 @@ export const RenderedAchievements = ({achievements}) => {
 
 const achievement_descriptions = {
     "within_10_feet": "Place a guess within 10 feet of the location!",
-    "over_1000_miles": "Place a guess over 1000 miles away from the location!",
+    "over_1000_miles": "Place a guess over 1000 miles away!",
     "one_game_played": "Play your first game!",
     "five_games_played": "Play five games!",
     "ten_games_played": "Play ten games!"
