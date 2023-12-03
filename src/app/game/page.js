@@ -120,7 +120,8 @@ export default function Game() {
               "distance": distance_from_right_answer * feet_per_meter
             }
             setGuesses([...guesses, new_guess])
-            const new_temp_score = Math.min((1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long)))) * num_images_ratio, 1500 * num_images_ratio)
+            const new_raw_score = (1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long)))) * num_images_ratio;
+            const new_temp_score = Math.min(new_raw_score, 1500 * num_images_ratio)
             setTempScore(new_temp_score)
             setScore(score + new_temp_score)
             setCenter({lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)})
@@ -178,7 +179,7 @@ export default function Game() {
             padding="20px 30px"
             _hover={{ bg: "lightgrey" }}
             variant="outline">
-            {imageIndex === 4 ? "Finish Game" : "Next Location"}
+            {imageIndex === (game.length - 1) ? "Finish Game" : "Next Location"}
           </Button>
           <h1>
             Current Score: {Math.round(score * 10) / 10}

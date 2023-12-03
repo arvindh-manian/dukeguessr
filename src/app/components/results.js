@@ -73,7 +73,7 @@ export const ResultDisplay = ({achievements, score, guesses, isOpen, setIsOpen, 
       <StatNumber>{average_distance}</StatNumber>
     </Stat></HStack>
     <Spacer></Spacer>
-    <Link href="/game" style={{ display: "inline-block" }}>
+    <Link href="/gamemode" style={{ display: "inline-block" }}>
       <Button
         colorScheme="black"
         fontSize="15"
