@@ -134,7 +134,7 @@ export default function Game() {
           {"Submit Guess"}
         </Button>
       <h1>
-        Current Score: {score}
+        Current Score: {Math.round(score * 10) / 10}
       </h1>
       </VStack>
     </>
@@ -163,9 +163,9 @@ export default function Game() {
           </Map>
           </HStack>
           <h1>
-          Score this guess: {tempScore}
+          Score this guess: {Math.round(tempScore * 10) / 10}
           </h1>
-          <p>Your last guess was {guesses[guesses.length - 1].distance} feet away</p>
+          <p>Your last guess was {Math.round(guesses[guesses.length - 1].distance * 100) / 100} feet away</p>
           <Button
             onClick={() => {
               setResultPage(false)
@@ -178,10 +178,10 @@ export default function Game() {
             padding="20px 30px"
             _hover={{ bg: "lightgrey" }}
             variant="outline">
-            {"Next Location"}
+            {imageIndex === 4 ? "Finish Game" : "Next Location"}
           </Button>
           <h1>
-            Current Score: {score}
+            Current Score: {Math.round(score * 10) / 10}
           </h1>
         </VStack>
       </>
@@ -207,10 +207,10 @@ export default function Game() {
           setIsOpen(data && data.length > 0)
         }
       )
-      return <h1>good job you did 5 guesses your score was {score}</h1>
+      return <h1>good job you did 5 guesses your score was {Math.round(score)}</h1>
     }
 
 
 
-    return <ResultDisplay achievements={achievements} score={Math.round(score) } isOpen={isOpen} setIsOpen={setIsOpen} />
+    return <ResultDisplay achievements={achievements} score={Math.round(score)} guesses={guesses} isOpen={isOpen} setIsOpen={setIsOpen} game={game}/>
 }

@@ -5,9 +5,21 @@ import {
     ModalCloseButton,
     ModalBody,
     Modal,
-    List,
-    ListItem,
+    HStack,
+    Text,
+    Spacer,
+    Heading,
+    Center,
+    VStack,
+    Box,
+    StatLabel,
+    StatNumber,
+    Stat,
+    Link,
+    Button
 } from "@chakra-ui/react";
+
+import { Carousel } from "./carousel";
 
 import { useState } from "react";
 import { RenderedAchievements } from "./achievements";
@@ -29,12 +41,49 @@ const AchievementDisplay = ({achievements, isOpen, onClose}) => {
             </>
 }
 
-export const ResultDisplay = ({achievements, score, isOpen, setIsOpen}) => {
-    console.log("Result display achievements", achievements);
-    console.log("Is open result", isOpen);
-    console.log(achievements && achievements.length > 0);
-    return <>
+export const ResultDisplay = ({achievements, score, guesses, isOpen, setIsOpen, game}) => {
+    const sum = guesses.reduce((total, guess) => total + guess.distance, 0);
+    const average_distance = Math.round(sum / guesses.length * 100) / 100;
+    return <Box minH={"80vh"} maxH={"80vh"}>
     <AchievementDisplay achievements={achievements} isOpen={isOpen} onClose={() => setIsOpen(false)}/>
-    <h1>good job you did 5 guesses your score was {score}</h1>
-    </>
-}
+    <Center><Heading>Results</Heading></Center>
+    <Carousel slides={game.map((item) => item.image_file)}></Carousel>
+    <Spacer></Spacer>
+    <Center>
+    <VStack>
+    <HStack justifyContent={"space-between"} w={"72.5vw"}>
+    
+      
+    <Stat bg="gray.50" border="1px"
+            borderRadius={5}
+            borderColor="black"
+            alignItems={"center"}
+            padding={2} maxW="35vw">
+      <StatLabel>Score</StatLabel>
+      <StatNumber>{score}</StatNumber>
+    </Stat>    
+    
+
+    <Stat bg="gray.50" border="1px"
+            borderRadius={5}
+            borderColor="black"
+            alignItems={"center"}
+            padding={2} maxW="35vw">
+      <StatLabel>Average Distance</StatLabel>
+      <StatNumber>{average_distance}</StatNumber>
+    </Stat></HStack>
+    <Spacer></Spacer>
+    <Link href="/game" style={{ display: "inline-block" }}>
+      <Button
+        colorScheme="black"
+        fontSize="15"
+        padding="20px 30px"
+        _hover={{ bg: "lightgrey" }}
+        variant="outline">
+        {"Play Again"}
+      </Button>
+    </Link>
+    </VStack>
+    </Center>
+    </Box>
+} 
