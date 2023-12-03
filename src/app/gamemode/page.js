@@ -110,7 +110,7 @@ export default function GameMode(){
                     onChangeEnd={(val) => handleChangeSlider(val)}
                     id='slider'
                     defaultValue={5}
-                    min={0}
+                    min={1}
                     max={20}
                     colorScheme='blue'
                     onChange={(v) => setSliderValue(v)}
