@@ -2,17 +2,17 @@
 
 import {
   Button,
-  Input,
   HStack,
   VStack,
   Image,
   AspectRatio,
-  Box
+  Box,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Map from "../components/map";
 import { useSession } from "next-auth/react";
 import haversine from "haversine-distance";
+import { ResultDisplay } from "../components/results";
 
 export default function Game() {
     const [game, setGame] = useState(null);
@@ -26,6 +26,9 @@ export default function Game() {
     const { data: session } = useSession();
     const [guesses, setGuesses] = useState([]);
     const [center, setCenter] = useState({ lat: 36.0014, lng: -78.9382 });
+    const [achievements, setAchievements] = useState(null);
+    const [fetchingAchievements, setFetchingAchievements] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleMarkerPositionChange = (position) => {
       console.log("resultPage: ",resultPage);
@@ -171,17 +174,30 @@ export default function Game() {
       </>
     }
 
-    fetch(`/api/games/end`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "guesses": guesses,
-        "score": Math.round(score),
-        "uuid": session.user.name
-      }),
-    })
+    if (achievements === null && !fetchingAchievements) {
+      setFetchingAchievements(true);
+      fetch(`/api/games/end`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "guesses": guesses,
+          "score": Math.round(score),
+          "uuid": session.user.name
+        }),
+      }).then(
+        response => response.json()
+      ).then(
+        data => {
+          setAchievements(data)
+          setIsOpen(data && data.length > 0)
+        }
+      )
+      return <h1>good job you did 5 guesses your score was {score}</h1>
+    }
 
-    return <><h1>good job you did 5 guesses your score was {score}</h1></>
+
+
+    return <ResultDisplay achievements={achievements} score={Math.round(score) } isOpen={isOpen} setIsOpen={setIsOpen} />
 }

@@ -18,6 +18,7 @@ import {
     Center,
     Box
 } from "@chakra-ui/react";
+import { RenderedAchievements } from "@/app/components/achievements";
 
 const ComposedStat = ({ number, label }) => {
     return (
@@ -99,6 +100,8 @@ export default function User({ params }) {
                         number={user.high_score}
                         label="High score"></ComposedStat>
                 </HStack>
+                <br></br>
+                <RenderedAchievements achievements={["one_game_played", "five_games_played", "ten_games_played", "within_10_feet", "over_1000_miles"].filter((achievement) => user[achievement])} />
             </VStack>
             <><h1></h1></>
         </VStack>
