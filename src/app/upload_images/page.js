@@ -22,13 +22,15 @@ const ImageUpload = () => {
         body: formData
       })
       if (!resp.ok) {
-        setError(true)
+        setError(true);
         return
+      } else {
+        setError(false);
       }
     } catch {
-      setError(true)
+      setError(true);
     } finally {
-      setUploaded(true)
+      setUploaded(true);
     }
   }
 
@@ -48,9 +50,15 @@ const ImageUpload = () => {
           height='auto'
           mt={10}
         />
-        <Heading as='h2' size='2xl' mt={100}>
-          Your Image Was Submitted!
-        </Heading>
+        <VStack>
+          <Heading as='h2' size='2xl' mt={100}>
+            Your Image Was Submitted!
+          </Heading>
+          <form onSubmit={handleSubmit}>
+            <input type='file' onChange={handleFileChange} />
+            <button type='submit'>Upload</button>
+          </form>
+        </VStack>
       </Flex>
     )
   }
