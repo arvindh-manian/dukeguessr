@@ -1,7 +1,8 @@
 import { Card, CardBody, Image, Stack, Heading, Text, HStack, Center } from "@chakra-ui/react"
 
 const RenderedAchievement = ({name, description, image}) => {
-    return <Card maxW='xs' minW='xs' maxH='xs' minH='xs'>
+    console.log(description, name);
+    return <Card maxW='xs' minW='xs' maxH='sm' minH='sm'>
         <CardBody>
             <Center>
             <Image src={image}></Image>
@@ -23,10 +24,12 @@ export const RenderedAchievements = ({achievements}) => {
             <p>Invalid achievement array</p>
         </div>
     }
-    return <HStack>
+    return <HStack justifyContent={"space-evenly"} w={"100%"}>
+        <Center>
         {achievements.map((achievement) => {
             return <RenderedAchievement key={achievement} name={achievement} description={achievement_descriptions[achievement]} image={achievement_images[achievement]}/>
         })}
+        </Center>
     </HStack>
 }
 
