@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import Map from "../components/map";
 import { useSession } from "next-auth/react";
 import haversine from "haversine-distance";
+import { useSearchParams } from 'next/navigation';
 import { ResultDisplay } from "../components/results";
 
 export default function Game() {
@@ -25,7 +26,19 @@ export default function Game() {
     const [markerPosition, setMarkerPosition] = useState(null);
     const { data: session } = useSession();
     const [guesses, setGuesses] = useState([]);
-    const [center, setCenter] = useState({ lat: 36.0014, lng: -78.9382 });
+
+    const centers = {all: { lat: 36.0014, lng: -78.9382 }, 
+                    west: { lat: 36.0014, lng: -78.9382 }, 
+                    east: { lat: 36.0070, lng: -78.9156 },
+                    gardens: { lat: 36.0022, lng: -78.9331 }
+                  }
+
+    const searchParams = useSearchParams();
+    const mode = searchParams.get('mode');
+    const num_images = searchParams.get('num_images');
+    const num_images_ratio = 5 / num_images;
+
+    const [center, setCenter] = useState(centers[mode]);
     const [achievements, setAchievements] = useState(null);
     const [fetchingAchievements, setFetchingAchievements] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +57,7 @@ export default function Game() {
           if (!error && loading) {
             let resp;
             try {
-              resp = await fetch(`/api/games/start`, {method: "POST"})
+              resp = await fetch(`/api/games/start`, {method: "POST", body: JSON.stringify({mode: mode, num_images: num_images})})
               if (!resp.ok) {
                 setError(true);
                 return;
@@ -69,7 +82,7 @@ export default function Game() {
       return <p>Loading...</p>;
     }
     
-    if (imageIndex <= 4 && !resultPage) {
+    if (imageIndex < game.length && !resultPage) {
     return <>
       <VStack spacing="30px" paddingTop="30px">
       <HStack spacing="10px">
@@ -107,7 +120,8 @@ export default function Game() {
               "distance": distance_from_right_answer * feet_per_meter
             }
             setGuesses([...guesses, new_guess])
-            const new_temp_score = Math.min(1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long))), 1500)
+            const new_raw_score = (1 / (10 * Math.sqrt((markerPosition.lat - game[imageIndex].lat) * (markerPosition.lat - game[imageIndex].lat) + (markerPosition.lng - game[imageIndex].long) * (markerPosition.lng - game[imageIndex].long)))) * num_images_ratio;
+            const new_temp_score = Math.min(new_raw_score, 1500 * num_images_ratio)
             setTempScore(new_temp_score)
             setScore(score + new_temp_score)
             setCenter({lat: parseFloat(game[imageIndex].lat), lng: parseFloat(game[imageIndex].long)})
@@ -121,13 +135,13 @@ export default function Game() {
           {"Submit Guess"}
         </Button>
       <h1>
-        Current Score: {score}
+        Current Score: {Math.round(score * 10) / 10}
       </h1>
       </VStack>
     </>
     }
 
-    if (imageIndex <= 4 && resultPage) {
+    if (imageIndex < game.length && resultPage) {
       return <>
         <p></p>
         <VStack spacing="30px" style={{ paddingTop: "30px" }}>
@@ -150,25 +164,25 @@ export default function Game() {
           </Map>
           </HStack>
           <h1>
-          Score this guess: {tempScore}
+          Score this guess: {Math.round(tempScore * 10) / 10}
           </h1>
-          <p>Your last guess was {guesses[guesses.length - 1].distance} feet away</p>
+          <p>Your last guess was {Math.round(guesses[guesses.length - 1].distance * 100) / 100} feet away</p>
           <Button
             onClick={() => {
               setResultPage(false)
               setImageIndex(imageIndex + 1)
               setMarkerPosition(null)
-              setCenter({ lat: 36.0014, lng: -78.9382 })}
+              setCenter(centers[mode])}
             }
             colorScheme="black"
             fontSize="15"
             padding="20px 30px"
             _hover={{ bg: "lightgrey" }}
             variant="outline">
-            {"Next Location"}
+            {imageIndex === (game.length - 1) ? "Finish Game" : "Next Location"}
           </Button>
           <h1>
-            Current Score: {score}
+            Current Score: {Math.round(score * 10) / 10}
           </h1>
         </VStack>
       </>
@@ -194,10 +208,10 @@ export default function Game() {
           setIsOpen(data && data.length > 0)
         }
       )
-      return <h1>good job you did 5 guesses your score was {score}</h1>
+      return <h1>good job you did 5 guesses your score was {Math.round(score)}</h1>
     }
 
 
 
-    return <ResultDisplay achievements={achievements} score={Math.round(score) } isOpen={isOpen} setIsOpen={setIsOpen} />
+    return <ResultDisplay achievements={achievements} score={Math.round(score)} guesses={guesses} isOpen={isOpen} setIsOpen={setIsOpen} game={game}/>
 }
