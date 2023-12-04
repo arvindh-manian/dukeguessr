@@ -68,6 +68,9 @@ export default function Navbar () {
               <Link href='/contact' style={{ display: 'inline-block' }}>
                 <Button variant='ghost'>Contact Us</Button>
               </Link>
+              <Link href='/upload_images' style={{ display: 'inline-block' }}>
+                <Button variant='ghost'>Upload Images</Button>
+              </Link>
               {session ? (
                 <>
                   {' '}
