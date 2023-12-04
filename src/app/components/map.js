@@ -48,7 +48,7 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
                 zoom={15}
                 mapContainerStyle={{ width: "400px", height: "383px" }}
                 onLoad={handleMapLoad}>
-                {marker && !pauseMarker && (
+                {marker && userMarkerCookie && !pauseMarker ? (
                     <Marker
                         position={{
                             lat: marker.lat,
@@ -59,19 +59,34 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
                             scaledSize: new window.google.maps.Size(42, 44),
                         }}
                         ></Marker>
+                ): marker && (
+                    <Marker
+                        position={{
+                            lat: marker.lat,
+                            lng: marker.lng,
+                        }}
+                        icon={"http://maps.google.com/mapfiles/ms/icons/red-dot.png"}
+                    ></Marker>
                 )}
+
                 {imageMarkerPosition && (
                     <Marker 
                     position={imageMarkerPosition}
                     icon={"http://maps.google.com/mapfiles/ms/icons/green-dot.png"} />
                 )}
-                {userMarkerPosition && (
+
+                {userMarkerCookie && userMarkerPosition ? (
                     <Marker 
                     position={userMarkerPosition}
                     icon={{
                         url: `/images/${userMarkerCookie}.png`,
                         scaledSize: new window.google.maps.Size(42, 44),
                     }} />
+                ): userMarkerPosition && (
+                    <Marker 
+                    position={userMarkerPosition}
+                    icon={"http://maps.google.com/mapfiles/ms/icons/red-dot.png"}
+                    />
                 )}
             </GoogleMap>
         </div>
