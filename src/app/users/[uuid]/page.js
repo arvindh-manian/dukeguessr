@@ -39,6 +39,7 @@ const ComposedStat = ({ number, label }) => {
 
 export default function User({ params }) {
     const [user, setUser] = useState(null);
+    const [achievements, setAchievements] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [selectedMarker, setSelectedMarker] = useState(null);
@@ -61,7 +62,8 @@ export default function User({ params }) {
                     setError(true);
                 }
             }
-        };
+        }
+        ;
 
         fetchUser();
     });
@@ -80,8 +82,6 @@ export default function User({ params }) {
         console.log(Cookies.get("selectedMarker"))
       };
 
-
-    console.log(session.username)
     return (
     <>
         <VStack spacing={10} align='stretch'>
@@ -106,9 +106,9 @@ export default function User({ params }) {
             <><h1></h1></>
         </VStack>
         
-        {user.username === session.user.name ? (
+        {session && session.user && user.username === session.user.name ? (
         <>
-        <Box position='relative' padding='10'>
+        <Box position='relative' padding='5'>
             <Divider borderColor="darkgray"/>
             <AbsoluteCenter bg='white' px='4' as='b'>
                 Choose Your Marker
@@ -116,54 +116,73 @@ export default function User({ params }) {
         </Box>
         <Center>
         <HStack spacing={20} padding='20px'>
-        <IconButton
-            icon={<Image 
-            src="/images/devil.png"
-            width={65}
-            height={95} />}
-            border="1px"
-            background={selectedMarker === "devil" ? "#C3E3FC" : "transparent"}
-            _hover={{ background: "#C3E3FC" }}
-            width={100}
-            height={100}
-            onClick={() => handleMarkerSelection("devil")}
-        />
-        <IconButton
-            icon={<Image 
-            src="/images/happy.png"
-            width={65}
-            height={85} />}
-            border="1px"
-            background={selectedMarker === "happy" ? "#C3E3FC" : "transparent"}
-            _hover={{ background: "#C3E3FC" }}
-            width={100}
-            height={100}
-            onClick={() => handleMarkerSelection("happy")}
-        />
-        <IconButton
-            icon={<Image 
-            src="/images/dead.png"
-            width={55}
-            height={79} />}
-            border="1px"
-            background={selectedMarker === "dead" ? "#C3E3FC" : "transparent"}
-            _hover={{ background: "#C3E3FC" }}
-            width={100}
-            height={100}
-            onClick={() => handleMarkerSelection("dead")}
-        />
-        <IconButton
-            icon={<Image 
-            src="/images/sleep.png"
-            width={55}
-            height={79} />}
-            border="1px"
-            background={selectedMarker === "sleep" ? "#C3E3FC" : "transparent"}
-            _hover={{ background: "#C3E3FC" }}
-            width={100}
-            height={100}
-            onClick={() => handleMarkerSelection("sleep")}
-        />
+        <VStack>
+            <br></br>
+            <IconButton
+                icon={<Image 
+                src="/images/devil.png"
+                width={65}
+                height={95} />}
+                border="1px"
+                background={(selectedMarker || Cookies.get("selectedMarker")) === "devil" ? "#C3E3FC" : "transparent"}
+                _hover={{ background: "#C3E3FC" }}
+                width={100}
+                height={100}
+                onClick={() => handleMarkerSelection("devil")}
+            />
+        </VStack>
+        <VStack>
+            <br></br>
+            <IconButton
+                icon={<Image 
+                src="/images/happy.png"
+                width={65}
+                height={85} />}
+                border="1px"
+                background={(selectedMarker || Cookies.get("selectedMarker")) === "happy" ? "#C3E3FC" : "transparent"}
+                _hover={{ background: "#C3E3FC" }}
+                width={100}
+                height={100}
+                onClick={() => handleMarkerSelection("happy")}
+            />
+        </VStack>
+        <VStack>
+            <Text fontSize='12px'>Play 5 Games</Text>
+            <IconButton
+                icon={<Image 
+                    src="/images/dead.png"
+                    width={55}
+                    height={79} />}
+                border="1px"
+                background={(selectedMarker || Cookies.get("selectedMarker")) === "dead" ? "#C3E3FC" : "transparent"}
+                _hover={user.five_games_played ? { background: "transparent" } : {}}
+                width={100}
+                height={100}
+                onClick={user.five_games_played ? () => handleMarkerSelection("dead") : null}
+                style={{ 
+                    cursor: user.five_games_played ? "pointer" : "not-allowed", 
+                    opacity: user.five_games_played ? 1 : 0.35 }}
+            />
+        </VStack>
+        <VStack>
+            <Text fontSize='12px'>Hidden Task</Text>
+            <IconButton
+                icon={<Image 
+                    src="/images/sleep.png"
+                    width={55}
+                    height={79} />}
+                border="1px"
+                background={(selectedMarker || Cookies.get("selectedMarker")) === "sleep" ? "#C3E3FC" : "transparent"}
+                _hover={user.over_1000_miles ? { background: "transparent" } : {}}
+                width={100}
+                height={100}
+                onClick={user.over_1000_miles ? () => handleMarkerSelection("sleep") : null}
+                style={{ 
+                    cursor: user.over_1000_miles ? "pointer" : "not-allowed", 
+                    opacity: user.over_1000_miles ? 1 : 0.35 }}
+            />
+        </VStack>
+
         </HStack></Center></>) : null}
         
         <Box position='relative' padding='10'>
