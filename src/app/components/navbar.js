@@ -64,6 +64,11 @@ export default function Navbar() {
                                 style={{ display: "inline-block" }}>
                                 <Button variant="ghost">Leaderboard</Button>
                             </Link>
+                            <Link
+                                href="/users/upload_images"
+                                style={{ display: "inline-block" }}>
+                                <Button variant="ghost">Upload Images</Button>
+                            </Link>
                             <Button variant="ghost">Contact Us</Button>
                             {session ? (
                                 <>
