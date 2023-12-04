@@ -74,13 +74,19 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
                     position={imageMarkerPosition}
                     icon={"http://maps.google.com/mapfiles/ms/icons/green-dot.png"} />
                 )}
-                {userMarkerPosition && (
+
+                {userMarkerCookie && userMarkerPosition ? (
                     <Marker 
                     position={userMarkerPosition}
                     icon={{
                         url: `/images/${userMarkerCookie}.png`,
                         scaledSize: new window.google.maps.Size(42, 44),
                     }} />
+                ): userMarkerPosition && (
+                    <Marker 
+                    position={userMarkerPosition}
+                    icon={"http://maps.google.com/mapfiles/ms/icons/red-dot.png"}
+                    />
                 )}
             </GoogleMap>
         </div>
