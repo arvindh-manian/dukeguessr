@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-
+import Cookies from 'js-cookie';
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
 const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMarkerPosition, pauseMarker, center }) => {
     const [marker, setMarker] = useState(null);
-
+    
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GM_KEY,
     });
@@ -38,8 +38,8 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
         return <div>Loading...</div>;
     }
 
-    console.log("Center: ")
-    console.log(center);
+    const userMarkerCookie = Cookies.get("selectedMarker");
+    console.log("cookiemarker", userMarkerCookie)
 
     return (
         <div style={{ width: "50%", height: "55vh", paddingTop: "5px" }}>
@@ -54,7 +54,10 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
                             lat: marker.lat,
                             lng: marker.lng,
                         }}
-                        icon={"http://maps.google.com/mapfiles/ms/icons/red-dot.png"}
+                        icon={{
+                            url: `/images/${userMarkerCookie}.png`,
+                            scaledSize: new window.google.maps.Size(42, 44),
+                        }}
                         ></Marker>
                 )}
                 {imageMarkerPosition && (
@@ -65,7 +68,10 @@ const Map = ({ onMarkerPositionChange, onNewCenter, imageMarkerPosition, userMar
                 {userMarkerPosition && (
                     <Marker 
                     position={userMarkerPosition}
-                    icon={"http://maps.google.com/mapfiles/ms/icons/red-dot.png"} />
+                    icon={{
+                        url: `/images/${userMarkerCookie}.png`,
+                        scaledSize: new window.google.maps.Size(42, 44),
+                    }} />
                 )}
             </GoogleMap>
         </div>
