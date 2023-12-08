@@ -4,6 +4,18 @@ import { useState } from 'react'
 import Cookies from 'js-cookie'
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
 
+/**
+ * Render a Google Map component with markers and handle marker placement.
+ *
+ * @param {Object} props - The props object containing the following properties:
+ *   - onMarkerPositionChange: Function called when the marker position changes.
+ *   - onNewCenter: Function called when the map center changes.
+ *   - imageMarkerPosition: The position of the image marker.
+ *   - userMarkerPosition: The position of the user marker.
+ *   - pauseMarker: Boolean indicating if marker placement is paused.
+ *   - center: The center of the map.
+ * @return {JSX.Element} The rendered Google Map component.
+ */
 const Map = ({
   onMarkerPositionChange,
   onNewCenter,

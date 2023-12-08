@@ -25,6 +25,11 @@ import {
 } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 
+/**
+ * Initializes the GameMode component which is used for selecting the game modes.
+ *
+ * @return {ReactNode} The rendered component.
+ */
 export default function GameMode () {
   const [mode, setMode] = useState('all')
   const [sliderValue, setSliderValue] = useState(5)
