@@ -5,14 +5,11 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { v4 as uuidv4 } from 'uuid'
 
 /**
+ * Posts an image to the server and saves its location in the database.
  *
- * Return a list of all of the locations
- * Only for debugging purposes -- remove later
+ * @param {Request} request - The request object containing the image to be uploaded.
+ * @return {NextResponse} A JSON response object containing the latitude and longitude of the uploaded image.
  */
-export async function GET () {
-  return NextResponse.json({})
-}
-
 export async function POST (request) {
   const formData = await request.formData()
 

@@ -20,6 +20,11 @@ import Link from 'next/link'
 import Footer from '../components/footer'
 import styles from './page.module.css'
 
+/**
+ * Renders the Start component.
+ *
+ * @return {JSX.Element} The JSX representation of the Start component.
+ */
 export default function Start () {
   return (
     <Flex

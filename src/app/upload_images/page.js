@@ -3,6 +3,11 @@
 import React, { useState } from 'react'
 import { Heading, VStack, Flex, Image, Button } from '@chakra-ui/react'
 
+/**
+ * Renders a component for image upload.
+ *
+ * @return {JSX.Element} The rendered component.
+ */
 const ImageUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null)
   const [error, setError] = useState(false)
@@ -22,15 +27,15 @@ const ImageUpload = () => {
         body: formData
       })
       if (!resp.ok) {
-        setError(true);
+        setError(true)
         return
       } else {
-        setError(false);
+        setError(false)
       }
     } catch {
-      setError(true);
+      setError(true)
     } finally {
-      setUploaded(true);
+      setUploaded(true)
     }
   }
 
