@@ -79,7 +79,7 @@ export default function Game () {
   const [isOpen, setIsOpen] = useState(false)
 
   const getScore = () => {
-    return Math.round(scores.reduce((a, b) => a + b, 0) * 10) / 10
+    return Math.round(scores.reduce((a, b) => a + b, 0))
   }
 
   console.log(markerPosition)
