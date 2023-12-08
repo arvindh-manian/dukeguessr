@@ -12,11 +12,14 @@ import Link from 'next/link'
 import Instruct from '../components/instruct'
 import React from 'react'
 import { useSession } from 'next-auth/react'
+import Cookies from 'js-cookie';
 
 export default function Navbar () {
   const bg = useColorModeValue('white', 'gray.800')
   const mobileNav = useDisclosure()
   const { data: session } = useSession()
+
+  
   return (
     <React.Fragment>
       <chakra.header
@@ -78,7 +81,8 @@ export default function Navbar () {
                     href='/api/auth/signout?callbackUrl=/start'
                     style={{ display: 'inline-block' }}
                   >
-                    <Button variant='ghost'>Logout</Button>
+                    <Button variant='ghost'
+                            onClick={ Cookies.remove('selectedMarker')}>Logout</Button>
                   </Link>
                   <Link
                     href={`/users/${session.user.name}`}
