@@ -184,7 +184,7 @@ export default function User ({ params }) {
                       : 'transparent'
                   }
                   _hover={
-                    user.five_games_played ? { background: 'transparent' } : {}
+                    (user.five_games_played && selectedMarker != 'five_games_played') ? { background: '#C3E3FC' } : {}
                   }
                   width={100}
                   height={100}
@@ -213,7 +213,7 @@ export default function User ({ params }) {
                       : 'transparent'
                   }
                   _hover={
-                    user.over_1000_miles ? { background: 'transparent' } : {}
+                    (user.over_1000_miles && selectedMarker != 'over_1000_miles') ? { background: '#C3E3FC' } : {}
                   }
                   width={100}
                   height={100}
