@@ -51,3 +51,5 @@ CREATE TABLE Element(
     image_id INTEGER NOT NULL REFERENCES Location(image_id),
     PRIMARY KEY(game_id, image_id)
 );
+
+CREATE INDEX Location_Index ON Location(lat, long);
