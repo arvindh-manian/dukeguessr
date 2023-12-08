@@ -5,7 +5,8 @@ export async function getLeaderboard() {
     SELECT *
     FROM account
     LEFT JOIN records ON records.username = account.username
-    ORDER BY records.high_score DESC NULLS LAST`);
+    ORDER BY records.high_score DESC NULLS LAST
+    LIMIT 50`);
     return text.rows;
 }
 
