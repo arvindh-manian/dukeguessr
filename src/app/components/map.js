@@ -63,7 +63,7 @@ const Map = ({
         mapContainerStyle={{ width: '400px', height: '383px' }}
         onLoad={handleMapLoad}
       >
-        {userMarkerPosition && userMarkerCookie && !pauseMarker ? (
+        {userMarkerPosition && userMarkerCookie ? (
           <Marker
             position={{
               lat: userMarkerPosition.lat,
