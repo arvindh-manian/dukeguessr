@@ -18,7 +18,7 @@ import {
  * @return {ReactElement} The rendered Achievement component.
  */
 const RenderedAchievement = ({ name, description, image }) => {
-  console.log(description, name)
+  //console.log(description, name)
   return (
     <Card maxW='xs' minW='xs' maxH='sm' minH='sm'>
       <CardBody>

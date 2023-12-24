@@ -18,7 +18,6 @@ export default function Navbar () {
   const bg = useColorModeValue('white', 'gray.800')
   const mobileNav = useDisclosure()
   const { data: session } = useSession()
-
   
   return (
     <React.Fragment>
@@ -82,7 +81,9 @@ export default function Navbar () {
                     style={{ display: 'inline-block' }}
                   >
                     <Button variant='ghost'
-                            onClick={ Cookies.remove('selectedMarker')}>Logout</Button>
+                            onClick={() => Cookies.remove('selectedMarker')}
+                            >Logout</Button>
+
                   </Link>
                   <Link
                     href={`/users/${session.user.name}`}
